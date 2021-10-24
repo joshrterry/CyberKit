@@ -10,9 +10,9 @@ function upgradeAll() {
     sudo apt upgrade -yy
 }
 
-function softwareUpdates() {
+# function softwareUpdates() {
 
-}
+# }
 
 clear
 
