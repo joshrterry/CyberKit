@@ -22,7 +22,7 @@ clear
 
 # Selector
 
-function selector() {}
+function selector() {
 echo "Type any of the following numbers to select an action:"
     echo "1. update all packages"
     echo "2. enable automatic software updates"
@@ -30,6 +30,7 @@ echo "Type any of the following numbers to select an action:"
     read -p "enter section number: " secnum
 }
 
+selector
 case $secnum in
 1) upgradeAll; selector;
 esac
