@@ -73,7 +73,8 @@ echo "Type any of the following numbers to select an action:"
 selector
 case $secnum in
 1) upgradeAll; selector;
-3) 
+2) softwareUpdates; selector;
+3) checkUsers; selector; 
 esac
 
 
