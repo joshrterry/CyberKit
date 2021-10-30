@@ -33,8 +33,8 @@ function upgradeAll() {
 
 function softwareUpdates() {
     software-properties-gtk
-    echo("CHANGE THE FOLLOWING SETTING UNDER UPDATES:")
-    echo("Automatically check for updates \e[1;41m Daily \e [0m")
+    echo "CHANGE THE FOLLOWING SETTING UNDER UPDATES:"
+    echo "Automatically check for updates \e[1;41m Daily \e [0m"
 }
 
 function checkUsers() {
