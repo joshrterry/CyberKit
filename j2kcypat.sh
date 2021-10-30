@@ -1,7 +1,5 @@
 #!/bin/bash
 
-addingUsers = 0
-
 function cont() {
     echo Press ENTER to continue.
     read
@@ -52,12 +50,7 @@ function inputUsers() {
 
     echo "type out all users, separated by lines"
     echo "press ENTER again once you are finished"
-
-    while isReading == true
-
     
-
-}
 
 }
 
