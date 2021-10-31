@@ -136,6 +136,7 @@ function passwordPolicy() {
     echo ""
     echo "Add this to the end of the file:"
     echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800"
+    sudo gedit /etc/pam.d/common-auth
 
     else
     echo "please install libpam-cracklib"
