@@ -126,9 +126,9 @@ function passwordPolicy() {
 
     echo "CHANGE THE FOLLOWING SETTINGS IN /etc/pam.d/common-password"
     echo ""
-    echo "Add '"remember=5"' to the end of the line that has '"pam_unix.so"' in it"
-    echo "Add '"minlen=8"' to the end of the line that has '"pam_unix.so"' in it"
-    echo "Add '"ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1"' to the end of the line that has '"pam_cracklib.so"' in it"
+    echo "Add 'remember=5' to the end of the line that has 'pam_unix.so' in it"
+    echo "Add 'minlen=8' to the end of the line that has 'pam_unix.so' in it"
+    echo "Add 'ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1' to the end of the line that has 'pam_cracklib.so' in it"
     sudo gedit /etc/pam.d/common-password
     cont()
 
