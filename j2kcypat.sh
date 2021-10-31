@@ -117,6 +117,7 @@ function ufwEnable() {
 function passwordPolicy() {
     if promptYN -n "install libpam-cracklib"; then
     sudo apt install libpam-cracklib -yy  
+    fi
     echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
     echo ""
     echo "PASS_MAX_DAYS 90"
@@ -136,9 +137,6 @@ function passwordPolicy() {
     echo "Add this to the end of the file:"
     echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800"
     gedit /etc/pam.d/common-auth
-    else
-    echo "please install libpam-cracklib"
-    fi
 }
 
 clear
