@@ -122,22 +122,19 @@ function passwordPolicy() {
     echo "PASS_MIN_DAYS 10"
     echo "PASS_WARN_AGE 7"
     sudo gedit /etc/login.defs
-    cont()
-
+    cont
     echo "CHANGE THE FOLLOWING SETTINGS IN /etc/pam.d/common-password"
     echo ""
     echo "Add 'remember=5' to the end of the line that has 'pam_unix.so' in it"
     echo "Add 'minlen=8' to the end of the line that has 'pam_unix.so' in it"
     echo "Add 'ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1' to the end of the line that has 'pam_cracklib.so' in it"
     sudo gedit /etc/pam.d/common-password
-    cont()
-
+    cont
     echo "CHANGE THE FOLLOWING SETTINGS IN /etc/pam.d/common-auth"
     echo ""
     echo "Add this to the end of the file:"
     echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800"
     sudo gedit /etc/pam.d/common-auth
-
     else
     echo "please install libpam-cracklib"
     fi
