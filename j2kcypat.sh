@@ -116,6 +116,7 @@ function ufwEnable() {
 
 function passwordPolicy() {
     if promptYN -n "install libpam-cracklib"; then
+    sudo apt install libpam-cracklib -yy  
     echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
     echo ""
     echo "PASS_MAX_DAYS 90"
