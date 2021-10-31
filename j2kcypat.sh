@@ -99,10 +99,10 @@ function secureSudo() {
 
 function disableIPv4() {
     if sudo cat /proc/sys/net/ipv4/ip_forward | grep -q 1; then
-    "DISABLING IPV4 FORWARDING"
+    echo "DISABLING IPV4 FORWARDING"
     echo 0 > /proc/sys/net/ipv4/ip_forward
     else
-    "IPV4 Forwarding already disabled"
+    echo "IPV4 Forwarding already disabled"
     fi
 }
 
@@ -123,7 +123,7 @@ echo "Type any of the following numbers to select an action:"
     #https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
     echo "5. disable IPv4 forwarding"
     #https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/
-    echo "6. ensure sudo requires a password"
+    echo "6. ensure sudo is password protected"
     echo "7. search home directory for unwanted files"
     read -p "enter section number: " secnum
 }
@@ -134,8 +134,8 @@ case $secnum in
 2) softwareUpdates;;
 3) checkUsers; selector;;
 4) firefoxSettings;;
-5) disableIPv4;;
-6) secureSudo;;
+5) disableIPv4; selector;;
+6) secureSudo; selector;;
 7) searchHome; selector;;
 esac
 
