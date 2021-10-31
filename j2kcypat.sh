@@ -82,6 +82,7 @@ function searchHome() {
     cd ~
     sudo tree
     else 
+    echo "unable to search home folder";
     fi
 }
 
