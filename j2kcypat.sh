@@ -114,6 +114,7 @@ case $secnum in
 2) softwareUpdates;;
 3) checkUsers; selector;;
 4) firefoxSettings;;
+7) searchHome;;
 esac
 
 
