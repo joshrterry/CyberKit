@@ -86,6 +86,26 @@ function searchHome() {
     fi
 }
 
+function secureSudo() {
+
+    if sudo cat /etc/sudoers | grep -q NOPASSWD; then
+    sudo visudo
+    echo "Remove (username ALL=(ALL) NOPASSWD:ALL)"
+    else
+    echo "sudo is already password protected"
+    fi
+
+}
+
+function disableIPv4() {
+    if sudo cat /proc/sys/net/ipv4/ip_forward | grep -q 1; then
+    "DISABLING IPV4 FORWARDING"
+    echo 0 > /proc/sys/net/ipv4/ip_forward
+    else
+    "IPV4 Forwarding already disabled"
+    fi
+}
+
 clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
@@ -114,6 +134,8 @@ case $secnum in
 2) softwareUpdates;;
 3) checkUsers; selector;;
 4) firefoxSettings;;
+5) disableIPv4;;
+6) secureSudo;;
 7) searchHome; selector;;
 esac
 
