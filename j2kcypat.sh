@@ -106,6 +106,42 @@ function disableIPv4() {
     fi
 }
 
+function ufwEnable() {
+    echo "Enabling UFW with settings: DENY INCOMING & ALLOW OUTGOING"
+    sudo ufw default deny incoming
+    sudo ufw default allow outgoing
+    sudo ufw enable
+    echo "UFW ENABLED"
+}
+
+function passwordPolicy() {
+    if promptYN -n "install libpam-cracklib"; then
+    echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
+    echo ""
+    echo "PASS_MAX_DAYS 90"
+    echo "PASS_MIN_DAYS 10"
+    echo "PASS_WARN_AGE 7"
+    sudo gedit /etc/login.defs
+    cont()
+
+    echo "CHANGE THE FOLLOWING SETTINGS IN /etc/pam.d/common-password"
+    echo ""
+    echo "Add '"remember=5"' to the end of the line that has '"pam_unix.so"' in it"
+    echo "Add '"minlen=8"' to the end of the line that has '"pam_unix.so"' in it"
+    echo "Add '"ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1"' to the end of the line that has '"pam_cracklib.so"' in it"
+    sudo gedit /etc/pam.d/common-password
+    cont()
+
+    echo "CHANGE THE FOLLOWING SETTINGS IN /etc/pam.d/common-auth"
+    echo ""
+    echo "Add this to the end of the file:"
+    echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800"
+
+    else
+    echo "please install libpam-cracklib"
+    fi
+}
+
 clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
@@ -125,6 +161,9 @@ echo "Type any of the following numbers to select an action:"
     #https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/
     echo "6. ensure sudo is password protected"
     echo "7. search home directory for unwanted files"
+    echo "8. enable and configure ufw"
+    echo "9. remove hacking tools"
+    echo "10. set password policy"
     read -p "enter section number: " secnum
 }
 
@@ -137,6 +176,8 @@ case $secnum in
 5) disableIPv4;;
 6) secureSudo;;
 7) searchHome; selector;;
+8) ufwEnable; selector;;
+10) passwordPolicy;;
 esac
 
 
