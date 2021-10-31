@@ -134,8 +134,8 @@ case $secnum in
 2) softwareUpdates;;
 3) checkUsers; selector;;
 4) firefoxSettings;;
-5) disableIPv4; selector;;
-6) secureSudo; selector;;
+5) disableIPv4;;
+6) secureSudo;;
 7) searchHome; selector;;
 esac
 
