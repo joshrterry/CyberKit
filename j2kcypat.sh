@@ -104,7 +104,7 @@ echo "Type any of the following numbers to select an action:"
     echo "5. disable IPv4 forwarding"
     #https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/
     echo "6. ensure sudo requires a password"
-    echo "7. search home folder for unwanted files"
+    echo "7. search home directory for unwanted files"
     read -p "enter section number: " secnum
 }
 
@@ -114,7 +114,7 @@ case $secnum in
 2) softwareUpdates;;
 3) checkUsers; selector;;
 4) firefoxSettings;;
-7) searchHome;;
+7) searchHome; selector;;
 esac
 
 
