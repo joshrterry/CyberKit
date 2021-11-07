@@ -25,11 +25,13 @@ function promptYN() {
 }
 
 function upgradeAll() {
+    clear
     sudo apt update -yy
     sudo apt upgrade -yy
 }
 
 function softwareUpdates() {
+    clear
     echo "CHANGE THE FOLLOWING SETTING UNDER UPDATES:"
     echo ""
     echo "CHECK Important security Updates"
@@ -42,6 +44,7 @@ function softwareUpdates() {
 }
 
 function checkUsers() {
+    clear
     if promptYN -n "enter all users?"; then
     inputUsers
     else
@@ -50,6 +53,7 @@ function checkUsers() {
 }
 
 function inputUsers() {
+    clear
     
     echo -n > /home/script/passwds.txt
     echo -n > /home/script/admins.txt
@@ -60,7 +64,7 @@ function inputUsers() {
 }
 
 function firefoxSettings() {
-
+    clear
     echo "CHANGE THE FOLLOWING SETTINGS UNDER Preferences -> Privacy & Security"
     echo "Set DO NOT TRACK to ALWAYS"
     echo "Delete cookies and site data when Firefox is closed"
@@ -75,6 +79,7 @@ function firefoxSettings() {
 
 function searchHome() {
 
+    clear
     if promptYN -n "install tree"; then
     sudo apt install tree -yy
     clear
@@ -88,6 +93,7 @@ function searchHome() {
 
 function secureSudo() {
 
+    clear
     if sudo cat /etc/sudoers | grep -q NOPASSWD; then
     sudo visudo
     echo "Remove (username ALL=(ALL) NOPASSWD:ALL)"
@@ -98,6 +104,7 @@ function secureSudo() {
 }
 
 function disableIPv4() {
+    clear
     if sudo cat /proc/sys/net/ipv4/ip_forward | grep -q 1; then
     echo "DISABLING IPV4 FORWARDING"
     echo 0 > /proc/sys/net/ipv4/ip_forward
@@ -107,6 +114,7 @@ function disableIPv4() {
 }
 
 function ufwEnable() {
+    clear
     echo "Enabling UFW with settings: DENY INCOMING & ALLOW OUTGOING"
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
@@ -115,6 +123,7 @@ function ufwEnable() {
 }
 
 function passwordPolicy() {
+    clear
     if promptYN -n "install libpam-cracklib"; then
     sudo apt install libpam-cracklib -yy  
     fi
@@ -140,7 +149,8 @@ function passwordPolicy() {
 }
 
 function removeHackingTools() {
-    echo "Searching for hacking tools"
+    clear
+    echo "Searching for hacking tools..."
 
     if dpkg -l | grep wireshark; then
         if promptYN -n "remove wireshark"; then
@@ -233,7 +243,7 @@ case $secnum in
 6) secureSudo;;
 7) searchHome; selector;;
 8) ufwEnable; selector;;
-9) removeHackingTools;;
+9) removeHackingTools; selector;;
 10) passwordPolicy;;
 esac
 
