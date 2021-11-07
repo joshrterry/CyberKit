@@ -151,6 +151,7 @@ function removeHackingTools() {
     clear
     echo "Searching for hacking tools..."
 
+    #Prompt user to delete any hacker tools found on system
     if dpkg -l | grep wireshark; then
         if promptYN -n "remove wireshark"; then
         sudo apt purge wireshark -yy
