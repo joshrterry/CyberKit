@@ -125,7 +125,6 @@ function searchHome() {
     clear
     if promptYN -n "install tree"; then
     sudo apt install tree -yy
-    clear
     echo "Searching home folder..."
     sudo tree ~
     else 
