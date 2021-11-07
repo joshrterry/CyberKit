@@ -80,7 +80,7 @@ function inputUsers() {
                 echo "$username" >> /home/cypat/admins.txt
             fi 
 
-            echo "${username}:0ld$cona2021!"
+            echo "${username}:0ld\$cona2021!"
 
     done
 
