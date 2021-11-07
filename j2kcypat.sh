@@ -53,10 +53,10 @@ function checkUsers() {
 }
 
 function inputUsers() {
-    clear
-    
     echo -n > /home/cypat/passwds.txt
     echo -n > /home/cypat/admins.txt
+    
+    clear
 
     echo "type out all users, separated by lines"
     echo ""
@@ -69,7 +69,7 @@ function inputUsers() {
             # if user not found
             if cat /etc/passwd | grep /bin/bash | grep $username; then
                 echo "$username exists in /etc/passwd"
-            elif promptYN "$username not found in /etc/passed. create user $username?"; then
+            elif promptYN "$username not found in /etc/passwd. create user $username?"; then
             adduser "$username"
             fi
 
