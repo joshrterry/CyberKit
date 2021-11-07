@@ -139,6 +139,16 @@ function passwordPolicy() {
     gedit /etc/pam.d/common-auth
 }
 
+funtion removeHackingTools() {
+    echo "Searching for hacking tools"
+
+    if dpkg -l | grep wireshark; then
+    if promptYN -n "remove wireshark"; then
+    apt purge wireshark -yy
+    fi
+    fi
+}
+
 clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
@@ -174,6 +184,7 @@ case $secnum in
 6) secureSudo;;
 7) searchHome; selector;;
 8) ufwEnable; selector;;
+9) 
 10) passwordPolicy;;
 esac
 
