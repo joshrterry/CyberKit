@@ -50,6 +50,36 @@ function checkUsers() {
     else
     echo "skipped adding new users";
     fi
+
+        # checks if the provided user from /etc/passwd was given by the user.
+    # i.e. is there a user on the system that should not be there
+    if promptYN -n "check users in /etc/passwd?"; then
+        for username in `cat /etc/passwd | cut -d: -f1`; do
+            if grep $username /home/script/passwds.txt > /dev/null; then
+                echo "$username found in /home/script/passwds.txt, skipping"
+            elif promptYN -n "$username not found in /home/script/passwds.txt, remove?"; then
+                deluser --remove-home $username
+                echo "$username deleted."
+            fi
+        done
+    fi
+
+    # get list of sudoers
+    if promptYN -n "check admin?"; then
+        for username in `cat /etc/group | grep sudo | cut -d: -f4 | tr ',' '\n'`; do
+            if grep $username /home/script/admins.txt; then
+                echo "$username is a valid admin, skipping"
+            elif promptYN "$username is in the sudo group but not a valid sudoer, remove from sudo?"; then
+                deluser $username sudo
+                echo "$username removed from sudo group."
+                if cat /etc/group | grep adm | grep $username && promptYN "user also in \"adm\" group, remove?"; then
+                    deluser $username adm
+                    echo "$username removed from adm group."
+                fi
+            fi
+        done
+    fi
+
 }
 
 function inputUsers() {
@@ -67,7 +97,7 @@ function inputUsers() {
         echo "checking for $username"
 
             # if user not found
-            if cat /etc/passwd | grep /bin/bash | grep $username; then
+            if cat /etc/passwd | grep $username &>/dev/null; then
                 echo "$username exists in /etc/passwd"
             elif promptYN "$username not found in /etc/passwd. create user $username?"; then
             adduser "$username"
