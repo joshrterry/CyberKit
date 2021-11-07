@@ -139,13 +139,13 @@ function passwordPolicy() {
     gedit /etc/pam.d/common-auth
 }
 
-funtion removeHackingTools() {
+function removeHackingTools() {
     echo "Searching for hacking tools"
 
     if dpkg -l | grep wireshark; then
-    if promptYN -n "remove wireshark"; then
-    apt purge wireshark -yy
-    fi
+        if promptYN -n "remove wireshark"; then
+        apt purge wireshark -yy
+        fi
     fi
 }
 
