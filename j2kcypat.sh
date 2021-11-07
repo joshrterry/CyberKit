@@ -53,8 +53,8 @@ function checkUsers() {
 }
 
 function inputUsers() {
-    echo -n > /home/cypat/passwds.txt
-    echo -n > /home/cypat/admins.txt
+    touch /home/cypat/passwds.txt
+    touch /home/cypat/admins.txt
     
     clear
 
