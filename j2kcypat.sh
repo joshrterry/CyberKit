@@ -250,6 +250,8 @@ function removeHackingTools() {
         fi
     fi
 
+    sudo apt autoremove
+
 }
 
 clear
