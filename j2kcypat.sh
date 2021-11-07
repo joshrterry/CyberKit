@@ -184,7 +184,7 @@ case $secnum in
 6) secureSudo;;
 7) searchHome; selector;;
 8) ufwEnable; selector;;
-9) 
+9) removeHackingTools;;
 10) passwordPolicy;;
 esac
 
