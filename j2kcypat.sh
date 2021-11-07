@@ -84,8 +84,7 @@ function searchHome() {
     sudo apt install tree -yy
     clear
     echo "Searching home folder..."
-    cd ~
-    sudo tree
+    sudo tree ~
     else 
     echo "unable to search home folder";
     fi
@@ -155,6 +154,8 @@ function removeHackingTools() {
     if dpkg -l | grep wireshark; then
         if promptYN -n "remove wireshark"; then
         apt purge wireshark -yy
+        apt purge wireshark-common -yy
+
         fi
     fi
     
@@ -217,6 +218,7 @@ clear
 # Selector
 
 function selector() {
+    clear
 echo "Type any of the following numbers to select an action:"
     echo "1. update all packages"
     echo "2. enable automatic software updates"
