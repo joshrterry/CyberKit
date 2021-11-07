@@ -55,11 +55,41 @@ function checkUsers() {
 function inputUsers() {
     clear
     
-    echo -n > /home/script/passwds.txt
-    echo -n > /home/script/admins.txt
+    echo -n > /home/cypat/passwds.txt
+    echo -n > /home/cypat/admins.txt
 
     echo "type out all users, separated by lines"
-    echo "press ENTER again once you are finished"
+    echo ""
+
+    while promptYN -n "add another user?"; do
+
+        read -p "username: " username
+        echo "checking for $username"
+
+            # if user not found
+            if cat /etc/passwd | grep /bin/bash | grep $username; then
+                echo "$username exists in /etc/passwd"
+            elif promptYN "$username not found in /etc/passed. create user $username?"; then
+            adduser "$username"
+            fi
+
+            if promptYN -n "is $username an admin?"; then
+                adduser "$username" sudo #add to sudo group
+                adduser "$username" adm
+                echo "$username added to sudo and adm groups"
+                echo "$username" >> /home/cypat/admins.txt
+            fi 
+
+            echo "${username}:0ld$cona2021!"
+
+    done
+
+    echo "content of \"/home/script/passwds.txt\":"
+    cat /home/cypat/passwds.txt
+
+    if promptYN "change all user passwords?"; then
+        cat /home/cypat/passwds.txt | chpasswd
+    fi
     
 }
 
