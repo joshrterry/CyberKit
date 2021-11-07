@@ -53,8 +53,8 @@ function checkUsers() {
 }
 
 function inputUsers() {
-    touch /home/cypat/passwds.txt
-    touch /home/cypat/admins.txt
+    touch /home/script/passwds.txt
+    touch /home/script/admins.txt
     
     clear
 
@@ -77,7 +77,7 @@ function inputUsers() {
                 adduser "$username" sudo #add to sudo group
                 adduser "$username" adm
                 echo "$username added to sudo and adm groups"
-                echo "$username" >> /home/cypat/admins.txt
+                echo "$username" >> /home/script/admins.txt
             fi 
 
             echo "${username}:0ld\$cona2021!"
@@ -85,10 +85,10 @@ function inputUsers() {
     done
 
     echo "content of \"/home/script/passwds.txt\":"
-    cat /home/cypat/passwds.txt
+    cat /home/script/passwds.txt
 
     if promptYN "change all user passwords?"; then
-        cat /home/cypat/passwds.txt | chpasswd
+        cat /home/script/passwds.txt | chpasswd
     fi
     
 }
@@ -243,6 +243,7 @@ function removeHackingTools() {
 clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
+sudo mkdir /home/script
 cont
 clear
 
