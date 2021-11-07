@@ -80,7 +80,7 @@ function inputUsers() {
                 echo "$username" >> /home/script/admins.txt
             fi 
 
-            echo "${username}:0ld\$cona2021!"
+            echo "${username}:0ld\$cona2021!" >> /home/script/passwds.txt
 
     done
 
