@@ -290,7 +290,7 @@ case $secnum in
 5) disableIPv4;;
 6) secureSudo;;
 7) searchHome;;
-8) ufwEnable; selector;;
+8) ufwEnable;;
 9) removeHackingTools;;
 10) passwordPolicy;;
 esac
