@@ -281,15 +281,15 @@ echo "Type any of the following numbers to select an action:"
 
 selector
 case $secnum in
-1) upgradeAll; selector;;
+1) upgradeAll;;
 2) softwareUpdates;;
-3) checkUsers; selector;;
+3) checkUsers;;
 4) firefoxSettings;;
 5) disableIPv4;;
 6) secureSudo;;
-7) searchHome; selector;;
+7) searchHome;;
 8) ufwEnable; selector;;
-9) removeHackingTools; selector;;
+9) removeHackingTools;;
 10) passwordPolicy;;
 esac
 
