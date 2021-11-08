@@ -278,6 +278,7 @@ echo "Type any of the following numbers to select an action:"
     echo "8. enable and configure ufw"
     echo "9. remove hacking tools"
     echo "10. set password policy"
+    echo "11. "
     read -p "enter section number: " secnum
 }
 
@@ -293,6 +294,7 @@ case $secnum in
 8) ufwEnable;;
 9) removeHackingTools;;
 10) passwordPolicy;;
+11) ;;
 esac
 
 
