@@ -254,6 +254,17 @@ function removeHackingTools() {
 
 }
 
+function secureSSH {
+    echo "ADD THE FOLLOWING LINES TO /etc/ssh/ssh_config"
+    echo "PermitEmptyPasswords no"
+    echo "PermitRootLogin no"
+    echo "ENSURE ONLY Protocol 2 IS IN USE"
+
+
+
+
+}
+
 clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
@@ -278,7 +289,7 @@ echo "Type any of the following numbers to select an action:"
     echo "8. enable and configure ufw"
     echo "9. remove hacking tools"
     echo "10. set password policy"
-    echo "11. "
+    echo "11. secure ssh"
     read -p "enter section number: " secnum
 }
 
@@ -294,7 +305,7 @@ case $secnum in
 8) ufwEnable;;
 9) removeHackingTools;;
 10) passwordPolicy;;
-11) ;;
+11) secureSSH;;
 esac
 
 
