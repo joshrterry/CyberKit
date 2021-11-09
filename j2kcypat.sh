@@ -268,6 +268,9 @@ function secureSSH {
         echo "ADD THE FOLLOWING LINE TO /etc/ssh/ssh_config"
         echo "ENSURE ONLY Protocol 2 IS IN USE"
         gedit /etc/ssh/ssh_config
+    else
+        echo "SSH protocol 1 us already disable"
+    
     fi
     
     if sudo cat /etc/ssh/ssh_config | grep -q PermitRootLogin; then 
