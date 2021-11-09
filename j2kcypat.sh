@@ -256,7 +256,7 @@ function removeHackingTools() {
 
 function secureSSH {
 
-    if sudo cat /etc/ssh/ssh_config | grep -q PermitEmptyPasswords; then
+    if sudo cat /etc/ssh/ssh_config | grep -q "PermitEmptyPasswords no"; then
         echo "PermitEmptyPasswords is already disabled"        
     else
         echo "ADD THE FOLLOWING LINE TO /etc/ssh/ssh_config"
@@ -264,16 +264,16 @@ function secureSSH {
         gedit /etc/ssh/ssh_config
     fi
 
-    if sudo cat /etc/ssh/ssh_config | grep -q Protocol; then
+    if sudo cat /etc/ssh/ssh_config | grep -q "Protocol"; then
         echo "ADD THE FOLLOWING LINE TO /etc/ssh/ssh_config"
         echo "ENSURE ONLY Protocol 2 IS IN USE"
         gedit /etc/ssh/ssh_config
     else
-        echo "SSH protocol 1 us already disable"
+        echo "SSH protocol 1 is already disable"
     
     fi
     
-    if sudo cat /etc/ssh/ssh_config | grep -q PermitRootLogin; then 
+    if sudo cat /etc/ssh/ssh_config | grep -q "PermitRootLogin no"; then 
         echo "PermitRootLogin is already disabled"
      else 
         echo "ADD THE FOLLOWING LINE TO /etc/ssh/ssh_config"
