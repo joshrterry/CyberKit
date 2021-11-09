@@ -289,8 +289,8 @@ echo "The following ftp services are in use:"
 dpkg -l | grep ftp
 read -p "which ftp service would you like to purge: " ftpservice
 if promptYN -n "purge $ftpservice\?"; then
-sudo apt purge $ftpservice -yy
-
+    sudo apt purge $ftpservice -yy
+fi
 }
 
 clear
