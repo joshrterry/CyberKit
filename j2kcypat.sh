@@ -283,6 +283,16 @@ function secureSSH {
 
 }
 
+function disableFTP {
+clear
+echo "The following ftp services are in use:"
+dpkg -l | grep ftp
+read -p "which ftp service would you like to purge: " ftpservice
+if promptYN -n "purge $ftpservice\?"; then
+sudo apt purge $ftpservice -yy
+
+}
+
 clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
@@ -308,6 +318,7 @@ echo "Type any of the following numbers to select an action:"
     echo "9. remove hacking tools"
     echo "10. set password policy"
     echo "11. secure ssh"
+    echo "12. disable ftp"
     read -p "enter section number: " secnum
 }
 
@@ -324,6 +335,7 @@ case $secnum in
 9) removeHackingTools;;
 10) passwordPolicy;;
 11) secureSSH;;
+12) disableFTP;;
 esac
 
 
