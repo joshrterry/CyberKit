@@ -35,7 +35,7 @@ function softwareUpdates() {
     echo "CHANGE THE FOLLOWING SETTING UNDER UPDATES:"
     echo ""
     echo "CHECK Important security Updates"
-    echo "CHECK Recoomended updates"
+    echo "CHECK Recommended updates"
     echo "Automatically check for updates: DAILY"
     echo "When there are security updates: DOWNLOAD AND INSTALL AUTOMATICALLY"
     echo "When there are other updates: DISPLAY IMMEDIATELY"
@@ -79,7 +79,7 @@ function checkUsers() {
             fi
         done
     fi
-    
+
 }
 
 function inputUsers() {
