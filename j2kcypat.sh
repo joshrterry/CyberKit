@@ -152,13 +152,18 @@ function searchHome() {
 function secureSudo() {
 
     clear
-    if sudo cat /etc/sudoers | grep -q NOPASSWD; then
-    sudo visudo
-    echo "Remove the following line:"
-    echo "username ALL=(ALL) NOPASSWD:ALL"
-    else
-    echo "sudo is already password protected"
+    sudogrep=$(grep NOPASSWD /etc/sudoers)
+    if echo $sudogrep | grep NOPASSWD; then
+        echo "PASSWORD PROTECTING SUDO..."
+        sudo sed - "s/$sudogrep//"
     fi
+    # if sudo cat /etc/sudoers | grep -q NOPASSWD; then
+    # sudo visudo
+    # echo "Remove the following line:"
+    # echo "username ALL=(ALL) NOPASSWD:ALL"
+    # else
+    # echo "sudo is already password protected"
+    # fi
 
 }
 
