@@ -154,7 +154,8 @@ function secureSudo() {
     clear
     if sudo cat /etc/sudoers | grep -q NOPASSWD; then
     sudo visudo
-    echo "Remove (username ALL=(ALL) NOPASSWD:ALL)"
+    echo "Remove the following line:"
+    echo "username ALL=(ALL) NOPASSWD:ALL"
     else
     echo "sudo is already password protected"
     fi
@@ -276,13 +277,11 @@ function secureSSH {
     if sudo cat /etc/ssh/ssh_config | grep "PermitEmptyPasswords no" | grep -v '^#'; then
         echo "PermitEmptyPasswords is already disabled"        
     else
-        echo "ADD THE FOLLOWING LINE TO /etc/ssh/ssh_config"
-        echo "PermitEmptyPasswords no"
-        gedit /etc/ssh/ssh_config
+        echo "DISABLING EMPTY PASSWORDS..."
+        echo "PermitEmptyPasswords no" >> /etc/ssh/ssh_config
     fi
 
     if sudo cat /etc/ssh/ssh_config | grep "Protocol" | grep -v '^#'; then
-        echo "ADD THE FOLLOWING LINE TO /etc/ssh/ssh_config"
         echo "ENSURE ONLY Protocol 2 IS IN USE"
         gedit /etc/ssh/ssh_config
     else
@@ -293,9 +292,8 @@ function secureSSH {
     if sudo cat /etc/ssh/ssh_config | grep "PermitRootLogin no" | grep -v '^#'; then 
         echo "PermitRootLogin is already disabled"
      else 
-        echo "ADD THE FOLLOWING LINE TO /etc/ssh/ssh_config"
-        echo "PermitRootLogin no"
-        gedit /etc/ssh/ssh_config
+        echo "DISABLING ROOT LOGIN..."
+        echo "PermitRootLogin no" >> /etc/ssh/ssh_config
     fi
 
 }
