@@ -63,6 +63,23 @@ function checkUsers() {
             fi
         done
     fi
+
+        # get list of sudoers
+    if promptYN -n "check admin?"; then
+        for username in `cat /etc/group | grep sudo | cut -d: -f4 | tr ',' '\n'`; do
+            if grep $username /home/script/admins.txt; then
+                echo "$username is a valid admin, skipping"
+            elif promptYN "$username is in the sudo group but not a valid sudoer, remove from sudo?"; then
+                deluser $username sudo
+                echo "$username removed from sudo group."
+                if cat /etc/group | grep adm | grep $username && promptYN "user also in \"adm\" group, remove?"; then
+                    deluser $username adm
+                    echo "$username removed from adm group."
+                fi
+            fi
+        done
+    fi
+    
 }
 
 function inputUsers() {
