@@ -155,7 +155,7 @@ function secureSudo() {
     sudogrep=$(grep NOPASSWD /etc/sudoers)
     if echo $sudogrep | grep NOPASSWD; then
         echo "PASSWORD PROTECTING SUDO..."
-        sudo sed - "s/$sudogrep//"
+        sudo sed -i "s/$sudogrep//"
         else
         echo "sudo is already password protected"
     fi
