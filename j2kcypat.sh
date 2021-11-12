@@ -55,7 +55,7 @@ function checkUsers() {
         # checks if the provided user from /etc/passwd was given by the user.
     # i.e. is there a user on the system that should not be there
     if promptYN -n "check users in /etc/passwd?"; then
-        for username in `cat /etc/passwd | cut -d: -f1`; do
+        for username in `cat /etc/passwd | grep /bin/bash | cut -d: -f1`; do
             if grep $username /home/script/passwds.txt > /dev/null; then
                 echo "$username found in /home/script/passwds.txt, skipping"
             elif promptYN -n "$username not found in /home/script/passwds.txt, remove?"; then
@@ -316,6 +316,13 @@ function checkServices {
     echo "Usually a wrong setting in a config file for sql, apache, etc. will be a point."
 }
 
+function checkUID0() {
+    echo "Ensure that the only user with a UID of 0 is the root"
+    echo "username:uid"
+    cat /etc/passwd | cut -f1,3 -d:
+    cont
+}
+
 clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
@@ -343,6 +350,7 @@ echo "Type any of the following numbers to select an action:"
     echo "11. secure ssh"
     echo "12. disable ftp"
     echo "13. check services"
+    echo "14. check /etc/passwd"
     read -p "enter section number: " secnum
 }
 
@@ -361,6 +369,7 @@ case $secnum in
 11) secureSSH;;
 12) disableFTP;;
 13) checkServices;;
+14) checkUID0;;
 esac
 
 
