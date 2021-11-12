@@ -39,6 +39,9 @@ function softwareUpdates() {
     echo "Automatically check for updates: DAILY"
     echo "When there are security updates: DOWNLOAD AND INSTALL AUTOMATICALLY"
     echo "When there are other updates: DISPLAY IMMEDIATELY"
+    echo ""
+    echo "Set firefox as the default browser"
+    echo ""
     software-properties-gtk
 
 }
