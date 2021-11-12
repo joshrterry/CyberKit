@@ -138,7 +138,6 @@ function firefoxSettings() {
 }
 
 function searchHome() {
-
     clear
     if promptYN -n "install tree"; then
     sudo apt install tree -yy
@@ -150,7 +149,6 @@ function searchHome() {
 }
 
 function secureSudo() {
-
     clear
     sudogrep=$(grep NOPASSWD /etc/sudoers)
     if echo $sudogrep | grep -q NOPASSWD; then
