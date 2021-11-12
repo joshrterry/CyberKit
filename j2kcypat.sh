@@ -298,15 +298,24 @@ function secureSSH {
 }
 
 function disableFTP {
-clear
-while promptYN -n "remove another ftp service?"; do
-echo "The following ftp services are in use:"
-dpkg -l | grep ftp
-read -p "which ftp service would you like to purge: " ftpservice
-if promptYN -n "purge $ftpservice?"; then
-    sudo apt purge $ftpservice -yy
-fi
-done
+    clear
+    while promptYN -n "remove another ftp service?"; do
+    echo "The following ftp services are in use:"
+    dpkg -l | grep ftp
+    read -p "which ftp service would you like to purge: " ftpservice
+    if promptYN -n "purge $ftpservice?"; then
+        sudo apt purge $ftpservice -yy
+    fi
+    done
+}
+
+function checkServices {
+    clear
+   if promptYN "check services?"; then
+        service --status-all | less
+    fi
+    echo "Check service configuration files for required services in /etc."
+    echo "Usually a wrong setting in a config file for sql, apache, etc. will be a point."
 }
 
 clear
@@ -335,6 +344,7 @@ echo "Type any of the following numbers to select an action:"
     echo "10. set password policy"
     echo "11. secure ssh"
     echo "12. disable ftp"
+    echo "13. check services"
     read -p "enter section number: " secnum
 }
 
@@ -352,6 +362,7 @@ case $secnum in
 10) passwordPolicy;;
 11) secureSSH;;
 12) disableFTP;;
+13) checkServices;;
 esac
 
 
