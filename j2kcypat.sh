@@ -40,8 +40,6 @@ function softwareUpdates() {
     echo "When there are security updates: DOWNLOAD AND INSTALL AUTOMATICALLY"
     echo "When there are other updates: DISPLAY IMMEDIATELY"
     echo ""
-    echo "Set firefox as the default browser"
-    echo ""
     software-properties-gtk
 
 }
@@ -134,10 +132,9 @@ function firefoxSettings() {
     echo "Don't save passwords"
     echo "Block pop-up windows"
     echo "Warn you when websites try to install add-ons"
-
+    echo "Set firefox as the default browser"
+    echo ""
     firefox
-
-
 }
 
 function searchHome() {
