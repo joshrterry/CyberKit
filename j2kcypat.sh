@@ -141,10 +141,10 @@ function searchHome() {
     clear
     if promptYN -n "install tree"; then
     sudo apt install tree -yy
-    echo "Searching home folder..."
+    echo "Searching home directory..."
     sudo tree /home/
     else 
-    echo "unable to search home folder";
+    echo "unable to search home directory";
     fi
 }
 
