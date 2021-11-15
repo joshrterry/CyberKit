@@ -111,7 +111,7 @@ function inputUsers() {
                 echo "$username" >> /home/script/admins.txt
             fi 
 
-            echo "${username}:0ld\$cona2021!" >> /home/script/passwds.txt
+            echo "${username}:0ldScona2021!" >> /home/script/passwds.txt
 
     done
 
@@ -408,7 +408,7 @@ exit
 # Things to add:
 # - Check file permissions
 # - Check related Sudo files (Compare with exemplar files?) - diff command
-# - Password hashing algorithm
+# DONE Password hashing algorithm
 # - Check groups
 # - Improve finding hacking tools and other unauthorized apps
 # - Conf files
