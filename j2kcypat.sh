@@ -179,6 +179,7 @@ function ufwEnable() {
 }
 
 function passwordPolicy() {
+    echo "creating backups directory..."
     mkdir backups
     clear
     if promptYN -n "install libpam-cracklib"; then
@@ -193,6 +194,25 @@ function passwordPolicy() {
         echo "overwriting login.defs..."
         cat configs/login.defs > /etc/login.defs
     fi
+
+    echo "displaying differences in common-password file"
+    diff configs/common-password /etc/pam.d/common-password
+    if promptYN -n "overwrite common-password?"; then
+        echo "backing up to cypat/backups..."
+        cp /etc/pam.d/common-password backups/common-password
+        echo "overwriting common-password..."
+        cat configs/common-password > /etc/pam.d/common-password
+    fi
+
+    echo "displaying differences in common-auth file"
+    diff configs/common-auth /etc/pam.d/common-auth
+    if promptYN -n "overwrite common-auth?"; then
+        echo "backing up to cypat/backups..."
+        cp /etc/pam.d/common-auth backups/common-auth
+        echo "overwriting common-auth..."
+        cat configs/common-auth > /etc/pam.d/common-auth
+    fi
+
     # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
     # echo ""
     # echo "PASS_MAX_DAYS 90"
