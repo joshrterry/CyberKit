@@ -185,7 +185,7 @@ function passwordPolicy() {
     fi
     
     echo "scanning login.defs file"
-        diff -y configs/login.defs /etc/login.defs
+        diff configs/login.defs /etc/login.defs
 
     # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
     # echo ""
