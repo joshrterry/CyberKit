@@ -187,9 +187,10 @@ function passwordPolicy() {
     echo "displaying differences in login.defs file"
     diff configs/login.defs /etc/login.defs
     if promptYN -n "overwrite login.defs?"; then
-    echo "backing up to cypat/backups"
-    cp /etc/login.defs backups
-    cat configs/login.defs > /etc/login.defs
+        echo "backing up to cypat/backups..."
+        cp /etc/login.defs backups/login.defs
+        echo "overwriting login.defs..."
+        cat configs/login.defs > /etc/login.defs
     fi
 
     # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
