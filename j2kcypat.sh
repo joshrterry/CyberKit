@@ -184,8 +184,13 @@ function passwordPolicy() {
     sudo apt install libpam-cracklib -yy  
     fi
     
-    echo "scanning login.defs file"
-        diff configs/login.defs /etc/login.defs
+    echo "displaying differences in login.defs file"
+    diff configs/login.defs /etc/login.defs
+    if promptYN -n "overwrite login.defs?"; then
+    echo "backing up to cypat/backups"
+    cp /etc/login.defs backups
+    cat configs/login/defs > /etc/login.defs
+    fi
 
     # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
     # echo ""
