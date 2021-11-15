@@ -189,7 +189,7 @@ function passwordPolicy() {
     if promptYN -n "overwrite login.defs?"; then
     echo "backing up to cypat/backups"
     cp /etc/login.defs backups
-    cat configs/login/defs > /etc/login.defs
+    cat configs/login.defs > /etc/login.defs
     fi
 
     # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
