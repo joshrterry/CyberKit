@@ -179,6 +179,7 @@ function ufwEnable() {
 }
 
 function passwordPolicy() {
+    mkdir backups
     clear
     if promptYN -n "install libpam-cracklib"; then
     sudo apt install libpam-cracklib -yy  
@@ -192,7 +193,6 @@ function passwordPolicy() {
         echo "overwriting login.defs..."
         cat configs/login.defs > /etc/login.defs
     fi
-
     # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
     # echo ""
     # echo "PASS_MAX_DAYS 90"
