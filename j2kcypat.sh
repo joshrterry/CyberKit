@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hackingTools=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "popem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
+hackingTools=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
 keyWords=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online")
 
 function cont() {
@@ -254,11 +254,12 @@ function removeHackingTools() {
 
     clear
 
-    for i in "${keyWords[@]}"; do 
+    for i in "${keyWords[@]}"; do
+    clear
     echo "searching for packages with '$i' in the description"
     if dpkg -l | grep -i exploit; then
         while promptYN -n "remove a package with this key word?"; do
-        read -p "which package would you like to remove?" package
+        read -p "which package would you like to remove: " package
         if promptYN -n "remove $package"; then
             sudo apt purge $package -yy
         fi
