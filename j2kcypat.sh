@@ -243,7 +243,7 @@ function removeHackingTools() {
 
     #Prompt user to delete any hacker tools found on system
 
-    for i in "${hackingTools[@]}" do
+    for i in "${hackingTools[@]}"; do
         if dpkg -l | grep -i $i; then
             if promptYN -n "remove $i?"; then
                 sudo apt purge $i -yy
