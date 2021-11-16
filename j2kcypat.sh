@@ -1,5 +1,7 @@
 #!/bin/bash
 
+hackingTools=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "popem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
+
 function cont() {
     echo Press ENTER to continue.
     read
@@ -240,61 +242,71 @@ function removeHackingTools() {
     echo "Searching for hacking tools..."
 
     #Prompt user to delete any hacker tools found on system
-    if dpkg -l | grep wireshark; then
-        if promptYN -n "remove wireshark"; then
-        sudo apt purge wireshark -yy
-        sudo apt purge wireshark-common -yy
 
+    for i in "${hackingTools[@]}" do
+        if dpkg -l | grep -i $i; then
+            if promptYN -n "remove $i?"; then
+                sudo apt purge $i -yy
+                sudo apt purge $i-common -yy
+            fi
         fi
-    fi
+    done
+
+    # if dpkg -l | grep wireshark; then
+    #     if promptYN -n "remove wireshark"; then
+    #     sudo apt purge wireshark -yy
+    #     sudo apt purge wireshark-common -yy
+
+    #     fi
+    # fi
     
-        if dpkg -l | grep nmap; then
-        if promptYN -n "remove nmap"; then
-        sudo apt purge nmap -yy
-        fi
-    fi
+    #     if dpkg -l | grep nmap; then
+    #     if promptYN -n "remove nmap"; then
+    #     sudo apt purge nmap -yy
+    #     fi
+    # fi
 
-        if dpkg -l | grep netcat; then
-        if promptYN -n "remove netcat"; then
-        sudo apt purge netcat -yy
-        fi
-    fi
+    #     if dpkg -l | grep netcat; then
+    #     if promptYN -n "remove netcat"; then
+    #     sudo apt purge netcat -yy
+    #     fi
+    # fi
 
-        if dpkg -l | grep sqlmap; then
-        if promptYN -n "remove sqlmap"; then
-        sudo apt purge sqlmap -yy
-        fi
-    fi
+    #     if dpkg -l | grep sqlmap; then
+    #     if promptYN -n "remove sqlmap"; then
+    #     sudo apt purge sqlmap -yy
+    #     fi
+    # fi
 
-        if dpkg -l | grep hydra; then
-        if promptYN -n "remove hydra"; then
-        sudo apt purge hydra -yy
-        fi
-    fi
+    #     if dpkg -l | grep hydra; then
+    #     if promptYN -n "remove hydra"; then
+    #     sudo apt purge hydra -yy
+    #     fi
+    # fi
 
-        if dpkg -l | grep john; then
-        if promptYN -n "remove john the ripper"; then
-        sudo apt purge john -yy
-        fi
-    fi
+    #     if dpkg -l | grep john; then
+    #     if promptYN -n "remove john the ripper"; then
+    #     sudo apt purge john -yy
+    #     fi
+    # fi
 
-        if dpkg -l | grep yersinia; then
-        if promptYN -n "remove yersinia"; then
-        sudo apt purge yersinia -yy
-        fi
-    fi
+    #     if dpkg -l | grep yersinia; then
+    #     if promptYN -n "remove yersinia"; then
+    #     sudo apt purge yersinia -yy
+    #     fi
+    # fi
 
-    if dpkg -l | grep telnetd; then
-        if promptYN -n "remove telnetd"; then
-        sudo apt purge telnetd -yy
-        fi
-    fi
+    # if dpkg -l | grep telnetd; then
+    #     if promptYN -n "remove telnetd"; then
+    #     sudo apt purge telnetd -yy
+    #     fi
+    # fi
 
-        if dpkg -l | grep medusa; then
-        if promptYN -n "remove medusa"; then
-        sudo apt purge yersinia -yy
-        fi
-    fi
+    #     if dpkg -l | grep medusa; then
+    #     if promptYN -n "remove medusa"; then
+    #     sudo apt purge yersinia -yy
+    #     fi
+    # fi
 
     sudo apt autoremove
 
@@ -412,3 +424,4 @@ exit
 # - Check groups
 # - Improve finding hacking tools and other unauthorized apps
 # - Conf files
+# - fix service checker to use systemctl
