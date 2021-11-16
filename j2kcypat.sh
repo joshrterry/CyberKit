@@ -227,6 +227,7 @@ function removeProhibitedSoftware() {
     #Prompt user to delete any hacker tools found on system
 
     for i in "${hackingTools[@]}"; do
+        clear
         if dpkg -l | grep -i $i; then
             if promptYN -n "remove $i?"; then
                 sudo apt purge $i -yy
@@ -237,13 +238,12 @@ function removeProhibitedSoftware() {
     clear
 
     for i in "${keyWords[@]}"; do
-    clear
-    echo "searching for packages with '$i' in the description"
-    if dpkg -l | grep -i $i; then
-        while promptYN -n "remove a package with this key word?"; do
         clear
-        dpkg -l | grep -i $i
-        read -p "which package would you like to remove: " package
+        echo "searching for packages with '$i' in the description"
+        if dpkg -l | grep -i $i; then
+            while promptYN -n "remove a package with this key word?"; do
+            dpkg -l | grep -i $i
+            read -p "which package would you like to remove: " package
         if promptYN -n "remove $package"; then
             sudo apt purge $package -yy
         fi
