@@ -259,6 +259,8 @@ function removeHackingTools() {
     echo "searching for packages with '$i' in the description"
     if dpkg -l | grep -i $i; then
         while promptYN -n "remove a package with this key word?"; do
+        clear
+        dpkg -l | grep -i $i
         read -p "which package would you like to remove: " package
         if promptYN -n "remove $package"; then
             sudo apt purge $package -yy
