@@ -1,7 +1,7 @@
 #!/bin/bash
 
 hackingTools=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
-keyWords=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online")
+keyWords=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept")
 
 function cont() {
     echo Press ENTER to continue.
@@ -83,6 +83,8 @@ function checkUsers() {
             fi
         done
     fi
+
+    checkUID0
 
 }
 
@@ -216,29 +218,9 @@ function passwordPolicy() {
         cat configs/common-auth > /etc/pam.d/common-auth
     fi
 
-    # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/login.defs"
-    # echo ""
-    # echo "PASS_MAX_DAYS 90"
-    # echo "PASS_MIN_DAYS 10"
-    # echo "PASS_WARN_AGE 7"
-    # gedit /etc/login.defs
-    # cont
-    # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/pam.d/common-password"
-    # echo ""
-    # echo "Ensure sha512 encryption is being used"
-    # echo "Add 'remember=5' to the end of the line that has 'pam_unix.so' in it"
-    # echo "Add 'minlen=8' to the end of the line that has 'pam_unix.so' in it"
-    # echo "Add 'ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1' to the end of the line that has 'pam_cracklib.so' in it"
-    # gedit /etc/pam.d/common-password
-    # cont
-    # echo "CHANGE THE FOLLOWING SETTINGS IN /etc/pam.d/common-auth"
-    # echo ""
-    # echo "Add this to the end of the file:"
-    # echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800"
-    # gedit /etc/pam.d/common-auth
 }
 
-function removeHackingTools() {
+function removeProhibitedSoftware() {
     clear
     echo "Searching for hacking tools..."
 
@@ -299,18 +281,6 @@ function secureSSH {
 
 }
 
-function disableFTP {
-    clear
-    while promptYN -n "remove another ftp service?"; do
-    echo "The following ftp services are in use:"
-    dpkg -l | grep ftp
-    read -p "which ftp service would you like to purge: " ftpservice
-    if promptYN -n "purge $ftpservice?"; then
-        sudo apt purge $ftpservice -yy
-    fi
-    done
-}
-
 function checkServices {
     clear
    if promptYN "check services?"; then
@@ -340,7 +310,7 @@ function selector() {
 echo "Type any of the following numbers to select an action:"
     echo "1. update all packages"
     echo "2. enable automatic software updates"
-    echo "3. check users"
+    echo "3. check users and groups"
     echo "4. firefox settings"
     #https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
     echo "5. disable IPv4 forwarding"
@@ -348,12 +318,10 @@ echo "Type any of the following numbers to select an action:"
     echo "6. ensure sudo is password protected"
     echo "7. search home directory for unwanted files"
     echo "8. enable and configure ufw"
-    echo "9. remove hacking tools"
+    echo "9. remove prohibited software"
     echo "10. set password policy"
     echo "11. secure ssh"
-    echo "12. disable ftp"
-    echo "13. check services"
-    echo "14. check /etc/passwd"
+    echo "12. check services"
     read -p "enter section number: " secnum
 }
 
@@ -367,22 +335,20 @@ case $secnum in
 6) secureSudo;;
 7) searchHome;;
 8) ufwEnable;;
-9) removeHackingTools;;
+9) removeProhibitedSoftware;;
 10) passwordPolicy;;
 11) secureSSH;;
-12) disableFTP;;
-13) checkServices;;
-14) checkUID0;;
+12) checkServices;;
 esac
 
 
 exit
 
-# Things to add:
+# Checklist:
 # - Check file permissions
 # - Check related Sudo files (Compare with exemplar files?) - diff command
 # DONE Password hashing algorithm
 # - Check groups
-# - Improve finding hacking tools and other unauthorized apps
+# DONE Improve finding hacking tools and other unauthorized apps
 # - Conf files
 # - fix service checker to use systemctl
