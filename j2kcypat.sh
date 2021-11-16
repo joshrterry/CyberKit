@@ -1,7 +1,7 @@
 #!/bin/bash
 
 hackingTools=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "popem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
-keyWords=("exploit" "vulnerability" "crack" "capture" "logger" "inject")
+keyWords=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online")
 
 function cont() {
     echo Press ENTER to continue.
@@ -256,7 +256,7 @@ function removeHackingTools() {
 
     for i in "${keyWords[@]}"; do 
     echo "searching for packages with '$i' in the description"
-    if dkpg -l | grep -i exploit; then
+    if dpkg -l | grep -i exploit; then
         while promptYN -n "remove a package with this key word?"; do
         read -p "which package would you like to remove?" package
         if promptYN -n "remove $package"; then
