@@ -254,7 +254,7 @@ function removeHackingTools() {
 
     clear
 
-    for i in "${keyWords[@]}" do 
+    for i in "${keyWords[@]}"; do 
     echo "searching for packages with '$i' in the description"
     if dkpg -l | grep -i exploit; then
         while promptYN -n "remove a package with this key word?"; do
