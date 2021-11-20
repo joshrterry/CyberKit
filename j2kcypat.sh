@@ -298,7 +298,7 @@ function checkServices {
 
 function checkUID0() {
 
-    for username in cat /etc/passwd | cut -f1,3 -d: | grep -v "root:0" | grep ":0"; do
+    for username in `cat /etc/passwd | cut -f1,3 -d: | grep -v "root:0" | grep ":0"`; do
         if promptYN "$username has a UID of 0! Remove this user?"; then
             deluser --remove-home $username
             echo "$username deleted"
