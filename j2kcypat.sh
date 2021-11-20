@@ -86,6 +86,11 @@ function checkUsers() {
 
     if promptYN -n "check uid 0?"; then 
         checkUID0
+        fi
+
+    if promptYN -n "check groups?"; then
+        checkGroups
+    fi
 
 }
 
