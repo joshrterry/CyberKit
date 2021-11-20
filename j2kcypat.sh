@@ -300,7 +300,7 @@ function checkUID0() {
 
     for username in `cat /etc/passwd | cut -f1,3 -d: | grep -v "root:0" | grep ":0" | cut -f1 -d:`; do
         if promptYN "$username has a UID of 0! Remove this user?"; then
-            deluser --remove-home $username
+            deluser --remove-home --force $username
             echo "$username deleted"
         fi
     done
