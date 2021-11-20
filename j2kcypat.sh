@@ -308,7 +308,6 @@ function checkUID0() {
 }
 
 function checkGroups() {
-    clear
     cat /etc/group | grep ":1...:"
     if promptYN "would you like to delete a group?"; then
         read -p "which group would you like to delete: " group
