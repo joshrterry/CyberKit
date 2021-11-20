@@ -293,7 +293,7 @@ function checkServices {
 function checkUID0() {
     echo "Ensure that the only user with a UID of 0 is the root"
     echo "username:uid"
-    cat /etc/passwd | cut -f1,3 -d:
+    cat /etc/passwd | grep ":0" | cut -f1,3 -d:z
 }
 
 clear
@@ -352,3 +352,4 @@ exit
 # DONE Improve finding hacking tools and other unauthorized apps
 # - Conf files
 # - fix service checker to use systemctl
+# - scrape readme for authorized users
