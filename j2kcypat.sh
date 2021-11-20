@@ -299,9 +299,11 @@ function checkServices {
 function checkUID0() {
 
     for username in `cat /etc/passwd | cut -f1,3 -d: | grep -v "root:0" | grep ":0" | cut -f1 -d:`; do
-        if promptYN "$username has a UID of 0! Remove this user?"; then
-            deluser --remove-home --force $username
-            echo "$username deleted"
+        if promptYN "$username has a UID of 0! Change this users UID?"; then
+            UID
+            sudo cat /etc/passwd | grep $username | sudo sed -i s/$username:x:0:0:/$username:x:1100:1100:/
+            sudo cat /etc/passwd | grep $username | sudo sed -i s/$username:x:0:....:/$username:x:1100:1100:/
+            echo "removed UID 0 from $username"
         fi
     done
     
@@ -311,7 +313,7 @@ function checkGroups() {
     cat /etc/group | grep ":1...:"
     while promptYN "would you like to delete a group?"; do
         read -p "which group would you like to delete: " group
-        delgroup $group
+        sudo delgroup $group
         echo "$group has been removed"
     done
 
