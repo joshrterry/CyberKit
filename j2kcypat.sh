@@ -84,7 +84,8 @@ function checkUsers() {
         done
     fi
 
-    checkUID0
+    if promptYN -n "check uid 0?"; then 
+        checkUID0
 
 }
 
@@ -291,9 +292,21 @@ function checkServices {
 }
 
 function checkUID0() {
-    echo "Ensure that the only user with a UID of 0 is the root"
-    echo "username:uid"
-    cat /etc/passwd | cut -f1,3 -d: | grep -v "root:0" | grep ":0"
+
+    for username in cat /etc/passwd | cut -f1,3 -d: | grep -v "root:0" | grep ":0"; do
+        if promptYN "$username has a UID of 0! Remove this user?"; then
+            deluser --remove-home $username
+            echo "$username deleted"
+        fi
+    done
+    
+}
+
+function checkGroups() {
+    clear
+    cat /etc/group | grep ":....:"
+    
+
 }
 
 clear
