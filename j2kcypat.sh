@@ -293,7 +293,7 @@ function checkServices {
 function checkUID0() {
     echo "Ensure that the only user with a UID of 0 is the root"
     echo "username:uid"
-    cat /etc/passwd | grep ":0" | cut -f1,3 -d:z
+    cat /etc/passwd | grep ":0" | cut -f1,3 -d:
 }
 
 clear
