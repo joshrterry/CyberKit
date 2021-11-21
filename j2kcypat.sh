@@ -169,13 +169,15 @@ function searchHome() {
 
 function secureSudo() {
     clear
-    sudogrep=$(grep NOPASSWD /etc/sudoers)
-    if echo $sudogrep | grep -q NOPASSWD; then
-        echo "PASSWORD PROTECTING SUDO..."
-        sudo sed -i "s/$sudogrep//" /etc/sudoers
+    SUDOGREP=$(grep NOPASSWD /etc/sudoers)
+    if echo $SUDOGREP | grep -q NOPASSWD; then
+        echo "password protecting sudo..."
+        sudo sed -i "s/$SUDOGREP//" /etc/sudoers
         else
         echo "sudo is already password protected"
     fi
+    echo "displaying differences in sudoers file"
+    diff configs/sudoers.txt /etc/sudoers
 }
 
 function disableIPv4() {
@@ -377,7 +379,7 @@ echo "Type any of the following numbers to select an action:"
     #https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
     echo "5. disable IPv4 forwarding"
     #https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/
-    echo "6. ensure sudo is password protected"
+    echo "6. secure sudo"
     echo "7. search home directory for unwanted files"
     echo "8. enable and configure ufw"
     echo "9. remove prohibited software"
