@@ -69,9 +69,9 @@ function checkUsers() {
     # i.e. is there a user on the system that should not be there
     if promptYN -n "check users in /etc/passwd?"; then
         for username in `cat /etc/passwd | grep /bin/bash | cut -d: -f1`; do
-            if grep $username /home/script/passwds.txt > /dev/null; then
-                echo "$username found in /home/script/passwds.txt, skipping"
-            elif promptYN -n "$username not found in /home/script/passwds.txt, remove?"; then
+            if grep $username configs/passwds.txt > /dev/null; then
+                echo "$username found in configs/passwds.txt, skipping"
+            elif promptYN -n "$username not found in configs/passwds.txt, remove?"; then
                 deluser --remove-home $username
                 echo "$username deleted."
             fi
@@ -81,7 +81,7 @@ function checkUsers() {
         # get list of sudoers
     if promptYN -n "check admin?"; then
         for username in `cat /etc/group | grep sudo | cut -d: -f4 | tr ',' '\n'`; do
-            if grep $username /home/script/admins.txt; then
+            if grep $username configs/admins.txt; then
                 echo "$username is a valid admin, skipping"
             elif promptYN "$username is in the sudo group but not a valid sudoer, remove from sudo?"; then
                 deluser $username sudo
@@ -103,8 +103,10 @@ function checkUsers() {
 }
 
 function inputUsers() {
-    touch /home/script/passwds.txt
-    touch /home/script/admins.txt
+    touch configs/passwds.txt
+    touch configs/admins.txt
+    > configs/passwds.txt
+    > configs/admins.txt
     
     clear
 
@@ -127,18 +129,18 @@ function inputUsers() {
                 adduser "$username" sudo #add to sudo group
                 adduser "$username" adm
                 echo "$username added to sudo and adm groups"
-                echo "$username" >> /home/script/admins.txt
+                echo "$username" >> configs/admins.txt
             fi 
 
-            echo "${username}:0ldScona2021!" >> /home/script/passwds.txt
+            echo "${username}:0ldScona2021!" >> configs/passwds.txt
 
     done
 
-    echo "content of \"/home/script/passwds.txt\":"
-    cat /home/script/passwds.txt
+    echo "content of \"configs/passwds.txt\":"
+    cat configs/passwds.txt
 
     if promptYN "change all user passwords?"; then
-        cat /home/script/passwds.txt | chpasswd
+        cat configs/passwds.txt | chpasswd
     fi
     
 }
@@ -379,8 +381,10 @@ echo "file permissions have been set"
 
 clear
 
-echo "Welcome to J2K05's CyberPatriot Script"
-sudo mkdir /home/script
+echo "################################### Welcome to J2K05's CyberPatriot Script ###################################"
+echo "ENSURE THIS SCRIPT IS RUN AS ROOT"
+echo "RUN SCRIPT IN ~/cypat"
+sudo mkdir passwords
 sudo mkdir backups
 cont
 clear
