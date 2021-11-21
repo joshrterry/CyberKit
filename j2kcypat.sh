@@ -1,7 +1,11 @@
 #!/bin/bash
 
-hackingTools=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
-keyWords=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept")
+HACKINGTOOLS=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
+KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept")
+SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd" "")
+SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "sudoers")
+SIXHUNDRED=("/etc/crontab")
+SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
 
 function cont() {
     echo Press ENTER to continue.
@@ -82,16 +86,14 @@ function checkUsers() {
                 fi
             fi
         done
-    fi
-
-    if promptYN -n "check uid 0?"; then 
-        checkUID0
-        fi
+    fi  
 
     if promptYN -n "check groups?"; then
         checkGroups
     fi
 
+    cont
+    checkUID0
 }
 
 function inputUsers() {
@@ -232,7 +234,7 @@ function removeProhibitedSoftware() {
 
     #Prompt user to delete any hacker tools found on system
 
-    for i in "${hackingTools[@]}"; do
+    for i in "${HACKINGTOOLS[@]}"; do
         clear
         if dpkg -l | grep -i $i; then
             if promptYN -n "remove $i?"; then
@@ -243,7 +245,7 @@ function removeProhibitedSoftware() {
 
     clear
 
-    for i in "${keyWords[@]}"; do
+    for i in "${KEYWORDS[@]}"; do
         clear
         echo "searching for packages with '$i' in the description"
         if dpkg -l | grep -i $i; then
@@ -299,7 +301,7 @@ function checkServices {
 function checkUID0() {
 
     for username in `cat /etc/passwd | cut -f1,3 -d: | grep -v "root:0" | grep ":0" | cut -f1 -d:`; do
-        if promptYN "$username has a UID of 0! Change this users UID?"; then
+        if promptYN "$username has a UID of 0! Change this users UID"; then
         sudo gedit /etc/passwd    
         fi
     done
@@ -313,6 +315,30 @@ function checkGroups() {
         sudo delgroup $group
         echo "$group has been removed"
     done
+
+}
+
+function filePermissions() {
+
+for i in "${SIXFOURFOUR[@]}"; do
+    sudo chown root:root $i
+    sudo chmod 644 $i
+done
+
+for i in "${SIXFORTY[@]}"; do
+    sudo chown root:root $i
+    sudo chmod 640 $i
+done
+
+for i in "${SIXHUNDRED[@]}"; do
+    sudo chown root:root $i
+    sudo chmod 600 $i
+done
+
+for i in "${SEVENHUNDRED[@]}"; do
+    sudo chown root:root $i
+    sudo chmod 700 $i
+done
 
 }
 
@@ -342,6 +368,7 @@ echo "Type any of the following numbers to select an action:"
     echo "10. set password policy"
     echo "11. secure ssh"
     echo "12. check services"
+    echo "13. check file permissions"
     read -p "enter section number: " secnum
 }
 
@@ -359,17 +386,19 @@ case $secnum in
 10) passwordPolicy;;
 11) secureSSH;;
 12) checkServices;;
+13) filePermissions;;
 esac
 
 
 exit
 
 # Checklist:
-# - Check file permissions
+# DONE Check file permissions
 # - Check related Sudo files (Compare with exemplar files?) - diff command
 # DONE Password hashing algorithm
-# - Check groups
+# DONE Check groups
 # DONE Improve finding hacking tools and other unauthorized apps
 # - Conf files
 # - fix service checker to use systemctl
 # - scrape readme for authorized users
+# - cron
