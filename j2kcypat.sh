@@ -381,7 +381,7 @@ echo "file permissions have been set"
 
 clear
 
-echo "################################### Welcome to J2K05's CyberPatriot Script ###################################"
+echo "-------- Welcome to J2K05's CyberPatriot Script --------"
 echo "ENSURE THIS SCRIPT IS RUN AS ROOT"
 echo "RUN SCRIPT IN ~/cypat"
 sudo mkdir passwords
