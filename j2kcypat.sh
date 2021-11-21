@@ -386,8 +386,14 @@ echo ""
 echo "1. ENSURE THIS SCRIPT IS RUN AS ROOT"
 echo "2. RUN SCRIPT IN ~/cypat"
 echo ""
-sudo mkdir passwords
-sudo mkdir backups
+
+if [ ! -d passwords/ ]; then
+    sudo mkdir passwords
+fi
+if [ ! -d backups/ ]; then
+    sudo mkdir backups
+fi
+
 cont
 clear
 
