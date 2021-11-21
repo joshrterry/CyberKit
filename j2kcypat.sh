@@ -176,8 +176,20 @@ function secureSudo() {
         else
         echo "sudo is already password protected"
     fi
-    echo "displaying differences in sudoers file"
+
+    echo "searching /etc/sudoers.d/"
+    ls -l /etc/sudoers.d/
+
+    echo "displaying differences in sudoers file:"
+    echo ""
     diff configs/sudoers.txt /etc/sudoers
+    if promptYN -n "modify sudoers file?"; then
+        sudo visudo
+    fi
+
+    echo "displaying differences in /etc/sudoers.d/README"
+    diff configs/sudoersd.txt /etc/sudoers.d/README
+
 }
 
 function disableIPv4() {
