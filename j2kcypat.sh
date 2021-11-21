@@ -2,7 +2,7 @@
 
 HACKINGTOOLS=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept")
-SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd" "")
+SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers")
 SIXHUNDRED=("/etc/crontab")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
@@ -321,23 +321,31 @@ function checkGroups() {
 function filePermissions() {
 
 for i in "${SIXFOURFOUR[@]}"; do
-    sudo chown root:root $i
-    sudo chmod 644 $i
+    if test -e "$i"; then
+        sudo chown root:root $i
+        sudo chmod 644 $i
+    fi
 done
 
 for i in "${SIXFORTY[@]}"; do
-    sudo chown root:root $i
-    sudo chmod 640 $i
+    if test -e "$i"; then
+        sudo chown root:root $i
+        sudo chmod 640  $i
+    fi
 done
 
 for i in "${SIXHUNDRED[@]}"; do
-    sudo chown root:root $i
-    sudo chmod 600 $i
+    if test -e "$i"; then
+        sudo chown root:root $i
+        sudo chmod 600 $i
+    fi
 done
 
 for i in "${SEVENHUNDRED[@]}"; do
-    sudo chown root:root $i
-    sudo chmod 700 $i
+    if test -e "$i"; then
+        sudo chown root:root $i
+        sudo chmod 700 $i
+    fi
 done
 
 }
