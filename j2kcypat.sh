@@ -1,11 +1,15 @@
 #!/bin/bash
 
-HACKINGTOOLS=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys")
-KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept")
+############################################ VARIABLES ############################################
+
+HACKINGTOOLS=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack")
+KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port scan")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers")
 SIXHUNDRED=("/etc/crontab")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
+
+########################################### SCRIPT TOOLS ###########################################
 
 function cont() {
     echo Press ENTER to continue.
@@ -30,6 +34,8 @@ function promptYN() {
         return `[[ $yn =~ ^[yY]?$ ]]`
     fi
 }
+
+######################################## HARDENING FUNCTIONS ########################################
 
 function upgradeAll() {
     clear
@@ -348,6 +354,8 @@ for i in "${SEVENHUNDRED[@]}"; do
     fi
 done
 
+echo "file permissions have been set"
+
 }
 
 clear
@@ -357,7 +365,7 @@ sudo mkdir /home/script
 cont
 clear
 
-# Selector
+########################################### SELECTOR ###########################################
 
 function selector() {
     clear
@@ -407,6 +415,6 @@ exit
 # DONE Check groups
 # DONE Improve finding hacking tools and other unauthorized apps
 # - Conf files
-# - fix service checker to use systemctl
+# WIP fix service checker to use systemctl
 # - scrape readme for authorized users
 # - cron
