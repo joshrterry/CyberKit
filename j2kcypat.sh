@@ -381,7 +381,7 @@ echo "file permissions have been set"
 
 clear
 
-echo "-------- Welcome to J2K05's CyberPatriot Script --------"
+echo "########## Welcome to J2K05's CyberPatriot Script ##########"
 echo ""
 echo "1. ENSURE THIS SCRIPT IS RUN AS ROOT"
 echo "2. RUN SCRIPT IN ~/cypat"
