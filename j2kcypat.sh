@@ -3,7 +3,7 @@
 ############################################ VARIABLES ############################################
 
 HACKINGTOOLS=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack")
-KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port scan")
+KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers")
 SIXHUNDRED=("/etc/crontab")
@@ -170,32 +170,40 @@ function searchHome() {
 }
 
 function secureSudo() {
-    clear
-    SUDOGREP=$(grep NOPASSWD /etc/sudoers)
-    if echo $SUDOGREP | grep -q NOPASSWD; then
-        echo "password protecting sudo..."
-        sudo sed -i "s/$SUDOGREP//" /etc/sudoers
-        else
-        echo "sudo is already password protected"
+    if promptYN -n "check for password protection?"; then
+        clear
+        SUDOGREP=$(grep NOPASSWD /etc/sudoers)
+        if echo $SUDOGREP | grep -q NOPASSWD; then
+            echo "password protecting sudo..."
+            sudo sed -i "s/$SUDOGREP//" /etc/sudoers
+            else
+            echo "sudo is already password protected"
+        fi
     fi
 
-    echo "searching /etc/sudoers.d/"
-    ls -l /etc/sudoers.d/
-
-    echo "displaying differences in sudoers file:"
-    echo ""
-    diff configs/sudoers.txt /etc/sudoers
-    if promptYN -n "modify sudoers file?"; then
-        sudo visudo
+    if promptYN -n "check sudoers.d directory?"; then
+        echo "searching /etc/sudoers.d/"
+        ls -l /etc/sudoers.d/
     fi
 
-    echo "displaying differences in /etc/sudoers.d/README"
-    diff configs/sudoersd.txt /etc/sudoers.d/README
-    if promptYN -n "overwrite /etc/sudoers.d/README?"; then
-        echo "backing up to cypat/backups..."
-        cp /etc/login.defs backups/login.defs
-        echo "overwriting login.defs..."
-        cat configs/login.defs > /etc/login.defs
+    if promptYN -n "check sudoers file?"; then
+        echo "displaying differences in sudoers file:"
+        echo ""
+        diff configs/sudoers.txt /etc/sudoers
+        if promptYN -n "modify sudoers file?"; then
+            sudo visudo
+        fi
+    fi
+
+    if promptYN -n "check /etc/sudoers.d/README?"; then
+        echo "displaying differences in /etc/sudoers.d/README"
+        diff configs/sudoersd.txt /etc/sudoers.d/README
+        if promptYN -n "overwrite /etc/sudoers.d/README?"; then
+            echo "backing up to cypat/backups..."
+            cp /etc/login.defs backups/login.defs
+            echo "overwriting login.defs..."
+            cat configs/login.defs > /etc/login.defs
+        fi
     fi
 
 }
@@ -277,7 +285,6 @@ function removeProhibitedSoftware() {
         echo "searching for packages with '$i' in the description"
         if dpkg -l | grep -i $i; then
             while promptYN -n "remove a package with this key word?"; do
-            dpkg -l | grep -i $i
             read -p "which package would you like to remove: " package
         if promptYN -n "remove $package"; then
             sudo apt purge $package -yy
@@ -416,7 +423,7 @@ echo "Type any of the following numbers to select an action:"
     echo "10. set password policy"
     echo "11. secure ssh"
     echo "12. check services"
-    echo "13. check file permissions"
+    echo "13. set file permissions"
     read -p "enter section number: " secnum
 }
 
@@ -442,7 +449,7 @@ exit
 
 # Checklist:
 # DONE Check file permissions
-# - Check related Sudo files (Compare with exemplar files?) - diff command
+# DONE Check related Sudo files (Compare with exemplar files?) - diff command
 # DONE Password hashing algorithm
 # DONE Check groups
 # DONE Improve finding hacking tools and other unauthorized apps
