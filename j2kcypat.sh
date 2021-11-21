@@ -189,6 +189,12 @@ function secureSudo() {
 
     echo "displaying differences in /etc/sudoers.d/README"
     diff configs/sudoersd.txt /etc/sudoers.d/README
+    if promptYN -n "overwrite /etc/sudoers.d/README?"; then
+        echo "backing up to cypat/backups..."
+        cp /etc/login.defs backups/login.defs
+        echo "overwriting login.defs..."
+        cat configs/login.defs > /etc/login.defs
+    fi
 
 }
 
@@ -213,7 +219,6 @@ function ufwEnable() {
 
 function passwordPolicy() {
     echo "creating backups directory..."
-    mkdir backups
     clear
     if promptYN -n "install libpam-cracklib"; then
     sudo apt install libpam-cracklib -yy  
@@ -376,6 +381,7 @@ clear
 
 echo "Welcome to J2K05's CyberPatriot Script"
 sudo mkdir /home/script
+sudo mkdir backups
 cont
 clear
 
