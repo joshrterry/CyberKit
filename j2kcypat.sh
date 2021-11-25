@@ -8,7 +8,7 @@ SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers")
 SIXHUNDRED=("/etc/crontab")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
-INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket")
+INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opemsmtpd.service" )
 
 ########################################### SCRIPT TOOLS ###########################################
 
@@ -144,19 +144,6 @@ function inputUsers() {
         cat configs/passwds.txt | chpasswd
     fi
     
-}
-
-function firefoxSettings() {
-    clear
-    echo "CHANGE THE FOLLOWING SETTINGS UNDER Preferences -> Privacy & Security"
-    echo "Set DO NOT TRACK to ALWAYS"
-    echo "Delete cookies and site data when Firefox is closed"
-    echo "Don't save passwords"
-    echo "Block pop-up windows"
-    echo "Warn you when websites try to install add-ons"
-    echo "Set firefox as the default browser"
-    echo ""
-    firefox
 }
 
 function searchHome() {
@@ -411,12 +398,34 @@ echo "file permissions have been set"
 
 }
 
+function checkMalware() {
+    clear
+    if promptYN "install clamav?"; then
+        sudo apt install clamav
+        sudo killall freshclam
+        sudo freshclam
+        if promptYN "would you like to scan system for malware? (NOTE: this may take a while)"; then
+            echo "infected files will be moved to ~/cypat/clamscanresults"
+            cont
+            clamscan -r --move=clamscanresults
+        fi
+    fi
+    if promptYN "check clamscan results?"; then
+        ls -la clamscanresults/
+        if promptYN "empty directory?"; then
+            sudo rm -r clamscanresults/*
+        fi
+    fi
+}
+
 clear
 
 echo "########## Welcome to J2K05's CyberPatriot Script ##########"
 echo ""
 echo "1. ENSURE THIS SCRIPT IS RUN AS ROOT"
 echo "2. RUN SCRIPT IN ~/cypat"
+echo "3. COMPLETE FORENSICS QUESTIONS FIRST"
+echo "4. SET FIREFOX SETTINGS THROUGH GUI"
 echo ""
 
 if [ ! -d passwords/ ]; then
@@ -424,6 +433,9 @@ if [ ! -d passwords/ ]; then
 fi
 if [ ! -d backups/ ]; then
     sudo mkdir backups
+fi
+if [ ! -d clamscanresults/ ]; then
+    sudo mkdir clamscanresults
 fi
 
 cont
@@ -433,23 +445,23 @@ clear
 
 function selector() {
     clear
-echo "Type any of the following numbers to select an action:"
-    echo "1. update all packages"
-    echo "2. enable automatic software updates"
-    echo "3. check users and groups"
-    echo "4. firefox settings"
-    #https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
-    echo "5. disable IPv4 forwarding"
-    #https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/
-    echo "6. secure sudo"
-    echo "7. search home directory for unwanted files"
-    echo "8. enable and configure ufw"
-    echo "9. remove prohibited software"
-    echo "10. set password policy"
-    echo "11. secure ssh"
-    echo "12. check services"
-    echo "13. set file permissions"
-    read -p "enter section number: " secnum
+    echo "Type any of the following numbers to select an action:"
+        echo "1. update all packages"
+        echo "2. enable automatic software updates"
+        echo "3. check users and groups"
+        #https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
+        echo "4. disable IPv4 forwarding"
+        #https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/
+        echo "5. secure sudo"
+        echo "6. search home directory for unwanted files"
+        echo "7. enable and configure ufw"
+        echo "8. remove prohibited software"
+        echo "9. set password policy"
+        echo "10. secure ssh"
+        echo "11. check services"
+        echo "12. set file permissions"
+        echo "13. check for malware"
+        read -p "enter section number: " secnum
 }
 
 selector
@@ -457,16 +469,16 @@ case $secnum in
 1) upgradeAll;;
 2) softwareUpdates;;
 3) checkUsers;;
-4) firefoxSettings;;
-5) disableIPv4;;
-6) secureSudo;;
-7) searchHome;;
-8) ufwEnable;;
-9) removeProhibitedSoftware;;
-10) passwordPolicy;;
-11) secureSSH;;
-12) checkServices;;
-13) filePermissions;;
+4) disableIPv4;;
+5) secureSudo;;
+6) searchHome;;
+7) ufwEnable;;
+8) removeProhibitedSoftware;;
+9) passwordPolicy;;
+10) secureSSH;;
+11) checkServices;;
+12) filePermissions;;
+13) checkMalware;;
 esac
 
 
