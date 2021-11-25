@@ -411,11 +411,7 @@ function checkMalware() {
         fi
     fi
     if promptYN "check clamscan results?"; then
-        if ls -lqA clamscanresults/ | grep -q .
-        then ! ls -lqA clamscanresults/
-        else echo "clamscanresults are empty"
-        fi
-
+        ls -lA clamscanresults/
         if promptYN "empty directory?"; then
             sudo rm clamscanresults/*
             sudo rm -r clamscanresults/*
