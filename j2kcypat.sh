@@ -189,11 +189,13 @@ function secureSudo() {
     fi
 
     if promptYN -n "check sudoers.d directory?"; then
+        clear
         echo "searching /etc/sudoers.d/"
         ls -l /etc/sudoers.d/
     fi
 
     if promptYN -n "check sudoers file?"; then
+        clear
         echo "displaying differences in sudoers file:"
         echo ""
         diff configs/sudoers.txt /etc/sudoers
@@ -203,6 +205,7 @@ function secureSudo() {
     fi
 
     if promptYN -n "check /etc/sudoers.d/README?"; then
+        clear
         echo "displaying differences in /etc/sudoers.d/README"
         diff configs/sudoersd.txt /etc/sudoers.d/README
         if promptYN -n "overwrite /etc/sudoers.d/README?"; then
