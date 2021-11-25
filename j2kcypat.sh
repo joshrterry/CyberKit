@@ -171,7 +171,7 @@ function searchHome() {
 
 function secureSudo() {
     clear
-    if promptYN -n "disable root login?"; then
+    if promptYN -n "disable local root login?"; then
         clear
         sudo usermod -p '!' root
         echo "root login disabled"
@@ -312,7 +312,7 @@ function secureSSH {
     if sudo cat /etc/ssh/ssh_config | grep "PermitEmptyPasswords no" | grep -v '^#'; then
         echo "PermitEmptyPasswords is already disabled"        
     else
-        echo "DISABLING EMPTY PASSWORDS..."
+        echo "disabling empty passwords..."
         echo "PermitEmptyPasswords no" >> /etc/ssh/ssh_config
     fi
 
@@ -337,13 +337,11 @@ function secureSSH {
 
 function checkServices {
     clear
-
-#     clear
-#    if promptYN "check services?"; then
-#         service --status-all | less
-#     fi
-#     echo "Check service configuration files for required services in /etc."
-#     echo "Usually a wrong setting in a config file for sql, apache, etc. will be a point."
+   if promptYN "check services?"; then
+        service --status-all
+    fi
+    echo "Check service configuration files for required services in /etc."
+    echo "Usually a wrong setting in a config file for sql, apache, etc. will be a point."
 }
 
 function checkUID0() {
@@ -467,7 +465,6 @@ exit
 # DONE Password hashing algorithm
 # DONE Check groups
 # DONE Improve finding hacking tools and other unauthorized apps
-# - Conf files
-# WIP fix service checker to use systemctl
+# WIP fix service checker
 # - scrape readme for authorized users
 # - cron
