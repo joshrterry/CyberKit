@@ -170,6 +170,12 @@ function searchHome() {
 }
 
 function secureSudo() {
+
+    if promptYN -n "disable root login?"; then
+        sudo usermod -p '!' root
+        "root login disabled"
+    fi
+
     if promptYN -n "check for password protection?"; then
         clear
         SUDOGREP=$(grep NOPASSWD /etc/sudoers)
@@ -321,15 +327,19 @@ function secureSSH {
         echo "PermitRootLogin no" >> /etc/ssh/ssh_config
     fi
 
+    sudo service ssh restart
+
 }
 
 function checkServices {
     clear
-   if promptYN "check services?"; then
-        service --status-all | less
-    fi
-    echo "Check service configuration files for required services in /etc."
-    echo "Usually a wrong setting in a config file for sql, apache, etc. will be a point."
+
+#     clear
+#    if promptYN "check services?"; then
+#         service --status-all | less
+#     fi
+#     echo "Check service configuration files for required services in /etc."
+#     echo "Usually a wrong setting in a config file for sql, apache, etc. will be a point."
 }
 
 function checkUID0() {
