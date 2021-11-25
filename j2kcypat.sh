@@ -407,7 +407,7 @@ function checkMalware() {
         if promptYN "would you like to scan system for malware? (NOTE: this may take a while)"; then
             echo "infected files will be moved to ~/cypat/clamscanresults"
             cont
-            clamscan -r --move=clamscanresults
+            clamscan -r --move=clamscanresults /
         fi
     fi
     if promptYN "check clamscan results?"; then
