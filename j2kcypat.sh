@@ -411,7 +411,11 @@ function checkMalware() {
         fi
     fi
     if promptYN "check clamscan results?"; then
-        ls -la clamscanresults/
+        if ls -lqA clamscanresults/ | grep -q .
+        then ! ls -lqA clamscanresults/
+        else echo "clamscanresults are empty"
+        fi
+
         if promptYN "empty directory?"; then
             sudo rm clamscanresults/*
             sudo rm -r clamscanresults/*
@@ -492,5 +496,6 @@ exit
 # DONE Check groups
 # DONE Improve finding hacking tools and other unauthorized apps
 # WIP fix service checker
+# DONE Check for malware
 # - scrape readme for authorized users
 # - cron
