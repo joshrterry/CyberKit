@@ -170,10 +170,11 @@ function searchHome() {
 }
 
 function secureSudo() {
-
+    clear
     if promptYN -n "disable root login?"; then
+        clear
         sudo usermod -p '!' root
-        "root login disabled"
+        echo "root login disabled"
     fi
 
     if promptYN -n "check for password protection?"; then
