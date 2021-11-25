@@ -2,12 +2,13 @@
 
 ############################################ VARIABLES ############################################
 
-HACKINGTOOLS=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack")
+PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "xserver-xorg*" "avahi-daemon" "cups" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs")
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers")
 SIXHUNDRED=("/etc/crontab")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
+INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket")
 
 ########################################### SCRIPT TOOLS ###########################################
 
@@ -275,11 +276,11 @@ function passwordPolicy() {
 
 function removeProhibitedSoftware() {
     clear
-    echo "Searching for hacking tools..."
+    echo "searching for hacking tools and potential vulnerabilities..."
 
-    #Prompt user to delete any hacker tools found on system
+    # prompt user to delete any prohibited software found on machine
 
-    for i in "${HACKINGTOOLS[@]}"; do
+    for i in "${PROHIBITEDSOFTWARE[@]}"; do
         clear
         if dpkg -l | grep -i $i; then
             if promptYN -n "remove $i?"; then
@@ -337,7 +338,19 @@ function secureSSH {
 
 function checkServices {
     clear
-   if promptYN "check services?"; then
+
+    if promptYN "check known insecure services?"; then
+        for i in "${INSECURESERVICES[@]}"; do
+            clear
+            if systemctl list-units --full -all | grep -Fi $i; then
+                if promptYN -n "stop $i?"; then
+                    systemctl stop $i
+                fi
+            fi
+        done
+    fi
+
+   if promptYN "check all services?"; then
         service --status-all
     fi
     echo "Check service configuration files for required services in /etc."
