@@ -413,6 +413,7 @@ function checkMalware() {
     if promptYN "check clamscan results?"; then
         ls -la clamscanresults/
         if promptYN "empty directory?"; then
+            sudo rm clamscanresults/*
             sudo rm -r clamscanresults/*
         fi
     fi
