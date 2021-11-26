@@ -419,6 +419,10 @@ function checkMalware() {
     fi
 }
 
+function auditPolicy() {
+    clear
+}
+
 clear
 
 echo "########## Welcome to J2K05's CyberPatriot Script ##########"
@@ -462,6 +466,7 @@ function selector() {
         echo "11. check services"
         echo "12. set file permissions"
         echo "13. check for malware"
+        echo "14. audit policy"
         read -p "enter section number: " secnum
 }
 
@@ -480,6 +485,7 @@ case $secnum in
 11) checkServices;;
 12) filePermissions;;
 13) checkMalware;;
+14) auditPolicy;;
 esac
 
 
@@ -495,3 +501,4 @@ exit
 # DONE Check for malware
 # - scrape readme for authorized users
 # - cron
+# - Audit Policy, User Rights Assignment?
