@@ -67,7 +67,6 @@ function softwareUpdates() {
     echo "When there are other updates: DISPLAY IMMEDIATELY"
     echo ""
     software-properties-gtk
-
 }
 
 function checkUsers() {
