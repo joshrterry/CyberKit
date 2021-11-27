@@ -421,6 +421,11 @@ function checkMalware() {
 
 function auditPolicy() {
     clear
+    if dpkg -s auditd audispd-plugins; then
+        print "installed"
+    else
+        print "not installed"
+    fi
 }
 
 clear
