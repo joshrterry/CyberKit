@@ -39,12 +39,12 @@ function promptYN() {
 function compareFile() {
 
     echo "displaying differences in $1 file"
-    diff configs/$1 /etc/$1
+    diff configs/$2 /etc/$1
     if promptYN -n "overwrite $1?"; then
         echo "backing up to cypat/backups..."
-        cp /etc/$1 backups/$1
+        cp /etc/$1 backups/$2
         echo "overwriting $1..."
-        cat configs/$1 > /etc/$1
+        cat configs/$2 > /etc/$1
 
     fi
 }
@@ -207,14 +207,7 @@ function secureSudo() {
 
     if promptYN -n "check /etc/sudoers.d/README?"; then
         clear
-        echo "displaying differences in /etc/sudoers.d/README"
-        diff configs/sudoersd.txt /etc/sudoers.d/README
-        if promptYN -n "overwrite /etc/sudoers.d/README?"; then
-            echo "backing up to cypat/backups..."
-            cp /etc/login.defs backups/login.defs
-            echo "overwriting login.defs..."
-            cat configs/login.defs > /etc/login.defs
-        fi
+        compareFile sudoers.d/README sudoersd.txt
     fi
 
 }
@@ -244,35 +237,12 @@ function passwordPolicy() {
     if promptYN -n "install libpam-cracklib"; then
     sudo apt install libpam-cracklib -yy  
     fi
-    
-    # echo "displaying differences in login.defs file"
-    # diff configs/login.defs /etc/login.defs
-    # if promptYN -n "overwrite login.defs?"; then
-    #     echo "backing up to cypat/backups..."
-    #     cp /etc/login.defs backups/login.defs
-    #     echo "overwriting login.defs..."
-    #     cat configs/login.defs > /etc/login.defs
-    # fi
 
-    compareFile login.defs
+    compareFile login.defs login.defs
 
-    echo "displaying differences in common-password file"
-    diff configs/common-password /etc/pam.d/common-password
-    if promptYN -n "overwrite common-password?"; then
-        echo "backing up to cypat/backups..."
-        cp /etc/pam.d/common-password backups/common-password
-        echo "overwriting common-password..."
-        cat configs/common-password > /etc/pam.d/common-password
-    fi
+    compareFile pam.d/common-password common-password
 
-    echo "displaying differences in common-auth file"
-    diff configs/common-auth /etc/pam.d/common-auth
-    if promptYN -n "overwrite common-auth?"; then
-        echo "backing up to cypat/backups..."
-        cp /etc/pam.d/common-auth backups/common-auth
-        echo "overwriting common-auth..."
-        cat configs/common-auth > /etc/pam.d/common-auth
-    fi
+    compareFile pam.d/common-auth common-auth
 
 }
 
