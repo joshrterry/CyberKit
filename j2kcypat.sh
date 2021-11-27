@@ -413,8 +413,9 @@ function auditPolicy() {
     sudo systemctl --now enable auditd
 
     #/etc/default/grub audit=1 
-    update-grub
+    compareFile /default/grub grub
 
+    update-grub
 
 }
 
