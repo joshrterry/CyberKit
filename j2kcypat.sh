@@ -42,7 +42,7 @@ function compareFile() {
     diff configs/$1 /etc/$1
     if promptYN -n "overwrite $1?"; then
         echo "backing up to cypat/backups..."
-        cp $1 backups/$1
+        cp /etc/$1 backups/$1
         echo "overwriting $1..."
         cat configs/$1 > /etc/$1
 
