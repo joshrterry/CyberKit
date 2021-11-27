@@ -40,10 +40,10 @@ function compareFile() {
 
     echo "displaying differences in $1 file"
     diff configs/$2 /etc/$1
-    if promptYN -n "overwrite $1?"; then
+    if promptYN -n "overwrite /etc/$1?"; then
         echo "backing up to cypat/backups..."
         cp /etc/$1 backups/$2
-        echo "overwriting $1..."
+        echo "overwriting /etc/$1..."
         cat configs/$2 > /etc/$1
 
     fi
