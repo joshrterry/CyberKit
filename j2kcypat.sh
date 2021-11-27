@@ -37,7 +37,6 @@ function promptYN() {
 }
 
 function compareFile() {
-
     echo "displaying differences in $1 file"
     diff configs/$2 /etc/$1
     if promptYN -n "overwrite /etc/$1?"; then
