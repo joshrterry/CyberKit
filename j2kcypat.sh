@@ -37,7 +37,16 @@ function promptYN() {
 }
 
 function compareFile() {
-    
+
+    echo "displaying differences in $1 file"
+    diff configs/$1 /etc/$1
+    if promptYN -n "overwrite $1?"; then
+        echo "backing up to cypat/backups..."
+        cp $1 backups/$1
+        echo "overwriting $1..."
+        cat configs/$1 > /etc/$1
+
+    fi
 }
 
 ######################################## HARDENING FUNCTIONS ########################################
@@ -236,14 +245,16 @@ function passwordPolicy() {
     sudo apt install libpam-cracklib -yy  
     fi
     
-    echo "displaying differences in login.defs file"
-    diff configs/login.defs /etc/login.defs
-    if promptYN -n "overwrite login.defs?"; then
-        echo "backing up to cypat/backups..."
-        cp /etc/login.defs backups/login.defs
-        echo "overwriting login.defs..."
-        cat configs/login.defs > /etc/login.defs
-    fi
+    # echo "displaying differences in login.defs file"
+    # diff configs/login.defs /etc/login.defs
+    # if promptYN -n "overwrite login.defs?"; then
+    #     echo "backing up to cypat/backups..."
+    #     cp /etc/login.defs backups/login.defs
+    #     echo "overwriting login.defs..."
+    #     cat configs/login.defs > /etc/login.defs
+    # fi
+
+    compareFile login.defs
 
     echo "displaying differences in common-password file"
     diff configs/common-password /etc/pam.d/common-password
