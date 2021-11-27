@@ -496,4 +496,4 @@ exit
 # DONE Check for malware
 # - scrape readme for authorized users
 # - cron
-# - Audit Policy, User Rights Assignment?
+# - Audit Policy, User Rights Assignment
