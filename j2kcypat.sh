@@ -36,6 +36,10 @@ function promptYN() {
     fi
 }
 
+function compareFile() {
+    
+}
+
 ######################################## HARDENING FUNCTIONS ########################################
 
 function upgradeAll() {
@@ -421,11 +425,16 @@ function checkMalware() {
 
 function auditPolicy() {
     clear
-    if dpkg -s auditd audispd-plugins; then
-        print "installed"
-    else
-        print "not installed"
-    fi
+    # install auditd
+    sudo apt install auditd audispd-plugins -y
+
+    # enable auditd
+    sudo systemctl --now enable auditd
+
+    #/etc/default/grub audit=1 
+    update-grub
+
+
 }
 
 clear
