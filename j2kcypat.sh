@@ -2,11 +2,11 @@
 
 ############################################ VARIABLES ############################################
 
-PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "xserver-xorg*" "avahi-daemon" "cups" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs")
+PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet ""telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "xserver-xorg*" "avahi-daemon" "cups" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "gdm3" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind" "")
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers")
-SIXHUNDRED=("/etc/crontab")
+SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
 INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.service")
 
@@ -44,7 +44,6 @@ function compareFile() {
         cp /etc/$1 backups/$2
         echo "overwriting /etc/$1..."
         cat configs/$2 > /etc/$1
-
     fi
 }
 
@@ -227,6 +226,20 @@ function ufwEnable() {
     sudo ufw default allow outgoing
     sudo ufw enable
     echo "UFW ENABLED"
+    echo ""
+
+    if dpkg -l | grep iptables-persistent; then
+        if promptYN "iptables-persistent is installed on this device and can conflict with ufw, would you like to remove?"; then
+            sudo apt purge iptables-persistent
+        fi
+    fi
+
+      if dpkg -l | grep nftables; then
+        if promptYN "nftables is installed on this device and can conflict with ufw, would you like to remove?"; then
+            sudo apt purge nftables
+        fi
+    fi
+
 }
 
 function passwordPolicy() {
@@ -314,7 +327,7 @@ function checkServices {
             clear
             if systemctl list-units --full -all | grep -Fi $i; then
                 if promptYN -n "stop $i?"; then
-                    systemctl stop $i
+                    sudo systemctl stop $i
                 fi
             fi
         done
@@ -496,3 +509,4 @@ exit
 # - scrape readme for authorized users
 # - cron
 # - Audit Policy, User Rights Assignment
+# - sshd_config file 
