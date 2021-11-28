@@ -25,4 +25,4 @@ auth	required			pam_permit.so
 auth	optional			pam_cap.so 
 # end of pam-auth-update config
 
-auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800
+auth required pam_tally2.so deny=5 onerr=fail audit silent unlock_time=1800
