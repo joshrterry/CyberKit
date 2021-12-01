@@ -522,6 +522,6 @@ exit
 # WIP fix service checker
 # DONE Check for malware
 # - scrape readme for authorized users
-# - cron
+# DONE cron
 # - Audit Policy, User Rights Assignment
 # DONE sshd_config file 
