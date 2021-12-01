@@ -315,7 +315,10 @@ function secureSSH {
         echo "PermitRootLogin no" >> /etc/ssh/ssh_config
     fi
 
-    sudo service ssh restart
+    compareFile ssh/sshd_config sshd_config
+
+    sudo systemctl restart ssh
+    sudo systemctl restart sshd
 
 }
 
@@ -510,4 +513,4 @@ exit
 # - cron
 # - Audit Policy, User Rights Assignment
 # - sshd_config file 
-# systemctl restart/reload sshd
+# systemctl restart sshd
