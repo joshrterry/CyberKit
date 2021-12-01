@@ -523,5 +523,5 @@ exit
 # DONE Check for malware
 # - scrape readme for authorized users
 # DONE cron
-# - Audit Policy, User Rights Assignment
+# DONE Audit Policy, User Rights Assignment
 # DONE sshd_config file 
