@@ -5,7 +5,7 @@
 PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet ""telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "xserver-xorg*" "avahi-daemon" "cups" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "gdm3" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind")
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
-SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers")
+SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers" "/etc/cron.allow")
 SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
 INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.service")
@@ -341,6 +341,18 @@ function checkServices {
     fi
     echo "Check service configuration files for required services in /etc."
     echo "Usually a wrong setting in a config file for sql, apache, etc. will be a point."
+    
+    if promptYN "enable cron service?"; then
+        systemctl --now enable cron
+        if test -f "/etc/cron.deny"; then
+            if promptYN "cron.deny should not exist, would you like to remove?"; then
+                sudo rm /etc/cron.deny
+            fi
+            touch /etc/cron.allow
+            chmod 640 /etc/cron.allow
+            chown root:root /etc/cron.allow
+        fi
+    fi
 }
 
 function checkUID0() {
@@ -512,5 +524,4 @@ exit
 # - scrape readme for authorized users
 # - cron
 # - Audit Policy, User Rights Assignment
-# - sshd_config file 
-# systemctl restart sshd
+# DONE sshd_config file 
