@@ -510,18 +510,4 @@ case $secnum in
 14) auditPolicy;;
 esac
 
-
 exit
-
-# Checklist:
-# DONE Check file permissions
-# DONE Check related Sudo files (Compare with exemplar files?) - diff command
-# DONE Password hashing algorithm
-# DONE Check groups
-# DONE Improve finding hacking tools and other unauthorized apps
-# WIP fix service checker
-# DONE Check for malware
-# - scrape readme for authorized users
-# DONE cron
-# DONE Audit Policy, User Rights Assignment
-# DONE sshd_config file 
