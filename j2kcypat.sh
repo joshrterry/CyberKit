@@ -9,7 +9,7 @@ SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudo
 SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
 INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.service")
-CRITICALSOFTWARE("rsyslog")
+CRITICALSOFTWARE=("rsyslog")
 CRITICALSERVICES=("rsyslog")
 
 ########################################### SCRIPT TOOLS ###########################################
