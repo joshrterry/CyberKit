@@ -54,7 +54,7 @@ echo Foods:safepassword123 >> /home/temp.txt
 echo Robotics:safepassword123 >> /home/temp.txt
 echo Windows10:safepassword123 >> /home/temp.txt
 
-chpasswd < /home/temp.txt
+/home/temp.txt | chpasswd
 rm /home/temp.txt
 
 #Install games
