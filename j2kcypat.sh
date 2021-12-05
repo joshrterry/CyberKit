@@ -2,13 +2,15 @@
 
 ############################################ VARIABLES ############################################
 
-PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet ""telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups*" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind")
+PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet ""telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups*" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind" "opensmtpd")
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers" "/etc/cron.allow")
 SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
 INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.service")
+CRITICALSOFTWARE("rsyslog")
+CRITICALSERVICES=("rsyslog")
 
 ########################################### SCRIPT TOOLS ###########################################
 
@@ -211,11 +213,12 @@ function secureSudo() {
 
 function disableIPv4() {
     clear
-    if sudo cat /proc/sys/net/ipv4/ip_forward | grep -q 1; then
-    echo "DISABLING IPV4 FORWARDING"
-    echo 0 > /proc/sys/net/ipv4/ip_forward
+    if sudo cat /proc/sys/net/ipv4/ip_forward | grep -q 1 && cmp --silent-- /etc/sysctl.conf configs/sysctl.conf ; then
+        echo "DISABLING IPV4 FORWARDING"
+        echo 0 > /proc/sys/net/ipv4/ip_forward
+        compareFile sysctl.conf sysctl.conf
     else
-    echo "IPV4 Forwarding already disabled"
+        echo "IPV4 Forwarding already disabled"
     fi
 }
 
@@ -257,8 +260,16 @@ function passwordPolicy() {
 
 }
 
-function removeProhibitedSoftware() {
+function checkSoftware() {
     clear
+    if promptYN "install critical packages?"; then
+        for i in "${CRITICALSOFTWARE[@]}"; do
+            clear
+            sudo apt install $i -yy
+            echo "$i installed"
+        done
+    fi
+
     echo "searching for hacking tools and potential vulnerabilities..."
 
     # prompt user to delete any prohibited software found on machine
@@ -352,6 +363,12 @@ function checkServices {
             chmod 640 /etc/cron.allow
             chown root:root /etc/cron.allow
         fi
+    fi
+
+    if promptYN "enabled critical services?"; then
+        for i in "${CRITICALSERVICES[@]}"; do
+            systemctl --now enable $i
+        done
     fi
 }
 
@@ -489,7 +506,7 @@ function selector() {
         echo "5. secure sudo"
         echo "6. search home directory for unwanted files"
         echo "7. enable and configure ufw"
-        echo "8. remove prohibited software"
+        echo "8. check software"
         echo "9. set password policy"
         echo "10. secure ssh"
         echo "11. check services"
@@ -508,7 +525,7 @@ case $secnum in
 5) secureSudo;;
 6) searchHome;;
 7) ufwEnable;;
-8) removeProhibitedSoftware;;
+8) checkSoftware;;
 9) passwordPolicy;;
 10) secureSSH;;
 11) checkServices;;
