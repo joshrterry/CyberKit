@@ -17,42 +17,42 @@ apt-get install goldeneye -y
 #Adding users
 #Command:
 #useradd -m -s /bin/bash username
-useradd -m -s /bin/bash Social
-useradd -m -s /bin/bash English
-useradd -m -s /bin/bash Math
-useradd -m -s /bin/bash CompSci
-useradd -m -s /bin/bash Cyber
-useradd -m -s /bin/bash Science
-useradd -m -s /bin/bash French
-useradd -m -s /bin/bash Debate
-useradd -m -s /bin/bash Band
-useradd -m -s /bin/bash Leadership
-useradd -m -s /bin/bash Cisco
+useradd -m -s /bin/bash social
+useradd -m -s /bin/bash english
+useradd -m -s /bin/bash math
+useradd -m -s /bin/bash compsci
+useradd -m -s /bin/bash cyber
+useradd -m -s /bin/bash science
+useradd -m -s /bin/bash french
+useradd -m -s /bin/bash debate
+useradd -m -s /bin/bash band
+useradd -m -s /bin/bash leadership
+useradd -m -s /bin/bash cisco
 
 #Unauthorized users
-useradd -m -s /bin/bash Foods
-useradd -m -s /bin/bash Robotics
-useradd -m -s /bin/bash Windows10
+useradd -m -s /bin/bash foods
+useradd -m -s /bin/bash robotics
+useradd -m -s /bin/bash windows
 
 #Passwords
 #password = "safepassword123"
 touch /home/temp.txt
 #Command:
 #echo username:$password >> /home/temp.txt
-echo Social:safepassword123 > /home/temp.txt
-echo English:safepassword123 >> /home/temp.txt
-echo Math:safepassword123 >> /home/temp.txt
-echo CompSci:safepassword123 >> /home/temp.txt
-echo Cyber:safepassword123 >> /home/temp.txt
-echo Science:safepassword123 >> /home/temp.txt
-echo French:safepassword123 >> /home/temp.txt
-echo Debate:safepassword123 >> /home/temp.txt
-echo Band:safepassword123 >> /home/temp.txt
-echo Leadership:safepassword123d >> /home/temp.txt
-echo Cisco:safepassword123 >> /home/temp.txt
-echo Foods:safepassword123 >> /home/temp.txt
-echo Robotics:safepassword123 >> /home/temp.txt
-echo Windows10:safepassword123 >> /home/temp.txt
+echo social:safepassword123 > /home/temp.txt
+echo english:safepassword123 >> /home/temp.txt
+echo math:safepassword123 >> /home/temp.txt
+echo compSci:safepassword123 >> /home/temp.txt
+echo cyber:safepassword123 >> /home/temp.txt
+echo science:safepassword123 >> /home/temp.txt
+echo french:safepassword123 >> /home/temp.txt
+echo debate:safepassword123 >> /home/temp.txt
+echo band:safepassword123 >> /home/temp.txt
+echo leadership:safepassword123d >> /home/temp.txt
+echo cisco:safepassword123 >> /home/temp.txt
+echo foods:safepassword123 >> /home/temp.txt
+echo robotics:safepassword123 >> /home/temp.txt
+echo windows:safepassword123 >> /home/temp.txt
 
 /home/temp.txt | chpasswd
 rm /home/temp.txt
