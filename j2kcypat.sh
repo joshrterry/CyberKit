@@ -366,6 +366,13 @@ function checkUID0() {
 }
 
 function checkGroups() {
+
+   if cat /etc/group | grep nopasswdlogin; then
+        if promptYN "nopasswdlogin group found, would  you like to remove?"; then
+            delgroup nopasswdlogin
+        fi
+    fi
+
     cat /etc/group | grep ":1...:"
     while promptYN "would you like to delete a group?"; do
         read -p "which group would you like to delete: " group
