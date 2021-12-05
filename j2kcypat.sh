@@ -2,7 +2,7 @@
 
 ############################################ VARIABLES ############################################
 
-PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet ""telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "gdm3" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind")
+PROHIBITEDSOFTWARE=("wireshark" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet ""telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack-ng" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups*" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind")
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers" "/etc/cron.allow")
@@ -386,29 +386,29 @@ function filePermissions() {
 
 for i in "${SIXFOURFOUR[@]}"; do
     if test -e "$i"; then
-        sudo chown root:root $i
-        sudo chmod 644 $i
+        sudo chown -c root:root $i
+        sudo chmod -c 644 $i
     fi
 done
 
 for i in "${SIXFORTY[@]}"; do
     if test -e "$i"; then
-        sudo chown root:root $i
-        sudo chmod 640  $i
+        sudo chown -c root:root $i
+        sudo chmod -c 640  $i
     fi
 done
 
 for i in "${SIXHUNDRED[@]}"; do
     if test -e "$i"; then
-        sudo chown root:root $i
-        sudo chmod 600 $i
+        sudo chown -c root:root $i
+        sudo chmod -c 600 $i
     fi
 done
 
 for i in "${SEVENHUNDRED[@]}"; do
     if test -e "$i"; then
-        sudo chown root:root $i
-        sudo chmod 700 $i
+        sudo chown -c root:root $i
+        sudo chmod -c 700 $i
     fi
 done
 
