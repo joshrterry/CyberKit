@@ -213,7 +213,7 @@ function secureSudo() {
 
 function disableIPv4() {
     clear
-    if sudo cat /proc/sys/net/ipv4/ip_forward | grep -q 1 && cmp --silent-- /etc/sysctl.conf configs/sysctl.conf ; then
+    if [ cat /proc/sys/net/ipv4/ip_forward | grep -q 1 ] && [ cmp --silent-- /etc/sysctl.conf configs/sysctl.conf ]; then
         echo "DISABLING IPV4 FORWARDING"
         echo 0 > /proc/sys/net/ipv4/ip_forward
         compareFile sysctl.conf sysctl.conf
