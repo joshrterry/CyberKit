@@ -365,7 +365,7 @@ function checkServices {
         fi
     fi
 
-    if promptYN "enabled critical services?"; then
+    if promptYN "enable critical services?"; then
         for i in "${CRITICALSERVICES[@]}"; do
             systemctl --now enable $i
         done
