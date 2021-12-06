@@ -493,6 +493,7 @@ fi
 if promptYN "does this machine have critical services?"; then
     while promptYN "add another critical service?"; do
         clear
+        echo "be sure to check config files for any of the following services"
         read -p "critical service: " service
         read -p "critical package: " package
         apt update
