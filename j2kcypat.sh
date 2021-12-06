@@ -490,6 +490,17 @@ if [ ! -d clamscanresults/ ]; then
     sudo mkdir clamscanresults
 fi
 
+promptYN "does this machine have critical services?"; then
+    while promptYN "add another critical service?"; do
+        clear
+        read -p "critical service: " service
+        read -p "critical package: " package
+        apt update
+        apt install package
+        systemctl --now enable service
+    done
+fi
+
 cont
 clear
 
