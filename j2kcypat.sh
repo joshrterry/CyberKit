@@ -318,6 +318,7 @@ function secureSSH {
         fi
     fi
 
+    cont
     clear
 
     if promptYN "ensure only SSH protocol 2 is in use?"; then
@@ -331,6 +332,7 @@ function secureSSH {
         fi
     fi
 
+    cont
     clear
     
     if promptYN "ensure PermitRootLogin is set to no?"; then
@@ -344,6 +346,7 @@ function secureSSH {
         fi
     fi
 
+    cont
     clear
 
     if promptYN "compare sshd_config file?"; then
