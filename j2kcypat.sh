@@ -478,6 +478,11 @@ function usbStorage() {
 
 }
 
+function enableEnablingOfUpdates() {
+    echo 'APT::Periodic::Update-Package-Lists "0";' > /etc/apt/apt.conf.d/20auto-upgrades
+    echo 'APT::Periodic::Unattended-Upgrade "0";' >> /etc/apt/apt.conf.d/20auto-upgrades
+}
+
 clear
 
 echo "########## Welcome to J2K05's CyberPatriot Script ##########"
@@ -508,6 +513,9 @@ if promptYN "does this machine have critical services?"; then
         apt install $package
         systemctl --now enable $service
     done
+
+    enableEnablingOfUpdates
+
 fi
 
 cont
