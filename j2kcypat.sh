@@ -12,7 +12,6 @@ INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.servi
 CRITICALSOFTWARE=("rsyslog")
 CRITICALSERVICES=("rsyslog")
 
-
 ########################################### SCRIPT TOOLS ###########################################
 
 function cont() {
