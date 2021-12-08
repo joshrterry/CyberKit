@@ -473,7 +473,7 @@ function auditPolicy() {
 function usbStorage() {
     clear
     if promptYN "disable external usb devices?"; then
-        compareFile blacklist.conf modprobe.d/blacklist.conf
+        compareFile modprobe.d/blacklist.conf blacklist.conf
     fi
 
 }
