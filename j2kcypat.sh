@@ -338,6 +338,8 @@ function secureSSH {
 function checkServices {
     clear
 
+    enableServices
+
     if promptYN "check known insecure services?"; then
         for i in "${INSECURESERVICES[@]}"; do
             clear
