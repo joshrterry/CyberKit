@@ -308,14 +308,14 @@ function secureSSH {
 
     clear
 
-    if sudo cat -v /etc/ssh/ssh_config | grep "PermitEmptyPasswords no" | grep -v '^#'; then
+    if sudo cat /etc/ssh/ssh_config | grep "PermitEmptyPasswords no" | grep -v --color '^#'; then
         echo "PermitEmptyPasswords is already disabled"        
     else
         echo "disabling empty passwords..."
         echo "PermitEmptyPasswords no" >> /etc/ssh/ssh_config
     fi
 
-    if sudo cat -v /etc/ssh/ssh_config | grep "Protocol" | grep -v '^#'; then
+    if sudo cat /etc/ssh/ssh_config | grep "Protocol" | grep -v --color '^#'; then
         echo "ENSURE ONLY Protocol 2 IS IN USE"
         gedit /etc/ssh/ssh_config
     else
@@ -323,7 +323,7 @@ function secureSSH {
     
     fi
     
-    if sudo cat -v /etc/ssh/ssh_config | grep "PermitRootLogin no" | grep -v '^#'; then 
+    if sudo cat /etc/ssh/ssh_config | grep "PermitRootLogin no" | grep -v --color '^#'; then 
         echo "PermitRootLogin is already disabled"
      else 
         echo "DISABLING ROOT LOGIN..."
