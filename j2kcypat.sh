@@ -309,7 +309,6 @@ function secureSSH {
     clear
 
     if promptYN "ensure PermitEmptyPasswords is set to no?"; then
-        clear
         if sudo cat /etc/ssh/ssh_config | grep "PermitEmptyPasswords no" | grep -v '^#'; then
             echo ""
             echo "PermitEmptyPasswords is already disabled"        
@@ -318,6 +317,8 @@ function secureSSH {
             echo "PermitEmptyPasswords no" >> /etc/ssh/ssh_config
         fi
     fi
+
+    clear
 
     if promptYN "ensure only SSH protocol 2 is in use?"; then
         clear
@@ -329,6 +330,8 @@ function secureSSH {
             echo "SSH protocol 1 is already disabled"
         fi
     fi
+
+    clear
     
     if promptYN "ensure PermitRootLogin is set to no?"; then
         clear
@@ -341,7 +344,13 @@ function secureSSH {
         fi
     fi
 
-    compareFile ssh/sshd_config sshd_config
+    clear
+
+    if promptYN "compare sshd_config file?"; then
+        compareFile ssh/sshd_config sshd_config
+    fi
+
+    clear
 
     sudo systemctl restart ssh
     sudo systemctl restart sshd
