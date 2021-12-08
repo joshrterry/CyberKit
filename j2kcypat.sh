@@ -539,6 +539,7 @@ function selector() {
         echo ""
         echo "14. audit policy"
         echo "15. disable usb storage"
+        echo ""
         read -p "enter section number: " secnum
 }
 
