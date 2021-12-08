@@ -59,6 +59,7 @@ function upgradeAll() {
 
 function softwareUpdates() {
     clear
+    enableEnablingOfUpdates
     echo "CHANGE THE FOLLOWING SETTING UNDER UPDATES:"
     echo ""
     echo "CHECK Important security Updates"
@@ -483,6 +484,21 @@ function enableEnablingOfUpdates() {
     echo 'APT::Periodic::Unattended-Upgrade "1";' >> /etc/apt/apt.conf.d/20auto-upgrades
 }
 
+function enableServices() {
+    if promptYN "does this machine have critical services?"; then
+        while promptYN "add another critical service?"; do
+            clear
+            echo "be sure to check config files for any of the following services"
+            read -p "critical service: " service
+            read -p "critical package: " package
+            apt update
+            apt install $package
+            systemctl --now enable $service
+        done
+    fi
+}
+
+
 clear
 
 echo "########## Welcome to J2K05's CyberPatriot Script ##########"
@@ -501,21 +517,6 @@ if [ ! -d backups/ ]; then
 fi
 if [ ! -d clamscanresults/ ]; then
     sudo mkdir clamscanresults
-fi
-
-if promptYN "does this machine have critical services?"; then
-    while promptYN "add another critical service?"; do
-        clear
-        echo "be sure to check config files for any of the following services"
-        read -p "critical service: " service
-        read -p "critical package: " package
-        apt update
-        apt install $package
-        systemctl --now enable $service
-    done
-
-    enableEnablingOfUpdates
-
 fi
 
 cont
