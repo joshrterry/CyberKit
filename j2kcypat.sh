@@ -6,7 +6,7 @@ PROHIBITEDSOFTWARE=("wireshark*" "nmap" "netcat" "sqlmap" "hydra" "john" "yersin
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port" "phish" "forensics" "scan" "penetration")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers" "/etc/cron.allow")
-SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config")
+SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config" "/etc/anacrontab")
 SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.d")
 INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.service")
 CRITICALSOFTWARE=("rsyslog")
@@ -470,6 +470,14 @@ function auditPolicy() {
 
 }
 
+function usbStorage() {
+    clear
+    if promptYN "disable external usb devices?"; then
+        compareFile blacklist.conf modprobe.d/blacklist.conf
+    fi
+
+}
+
 clear
 
 echo "########## Welcome to J2K05's CyberPatriot Script ##########"
@@ -526,6 +534,7 @@ function selector() {
         echo "12. set file permissions"
         echo "13. check for malware"
         echo "14. audit policy"
+        echo "15. disable usb storage"
         read -p "enter section number: " secnum
 }
 
@@ -545,6 +554,7 @@ case $secnum in
 12) filePermissions;;
 13) checkMalware;;
 14) auditPolicy;;
+15) usbStorage;;
 esac
 
 exit
