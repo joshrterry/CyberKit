@@ -308,29 +308,37 @@ function secureSSH {
 
     clear
 
-    if sudo cat /etc/ssh/ssh_config | grep "PermitEmptyPasswords no" | grep -v '^#'; then
-        echo ""
-        echo "PermitEmptyPasswords is already disabled"        
-    else
-        echo "disabling empty passwords..."
-        echo "PermitEmptyPasswords no" >> /etc/ssh/ssh_config
+    if promptYN "ensure PermitEmptyPasswords is set to no?"; then
+        clear
+        if sudo cat /etc/ssh/ssh_config | grep "PermitEmptyPasswords no" | grep -v '^#'; then
+            echo ""
+            echo "PermitEmptyPasswords is already disabled"        
+        else
+            echo "disabling empty passwords..."
+            echo "PermitEmptyPasswords no" >> /etc/ssh/ssh_config
+        fi
     fi
 
-    if sudo cat /etc/ssh/ssh_config | grep "Protocol" | grep -v '^#'; then
-        echo ""
-        echo "ENSURE ONLY Protocol 2 IS IN USE"
-        gedit /etc/ssh/ssh_config
-    else
-        echo "SSH protocol 1 is already disabled"
-    
+    if promptYN "ensure only SSH protocol 2 is in use?"; then
+        clear
+        if sudo cat /etc/ssh/ssh_config | grep "Protocol" | grep -v '^#'; then
+            echo ""
+            echo "ENSURE ONLY Protocol 2 IS IN USE"
+            gedit /etc/ssh/ssh_config
+        else
+            echo "SSH protocol 1 is already disabled"
+        fi
     fi
     
-    if sudo cat /etc/ssh/ssh_config | grep "PermitRootLogin no" | grep -v '^#'; then 
-        echo ""
-        echo "PermitRootLogin is already disabled"
-     else 
-        echo "DISABLING ROOT LOGIN..."
-        echo "PermitRootLogin no" >> /etc/ssh/ssh_config
+    if promptYN "ensure PermitRootLogin is set to no?"; then
+        clear
+        if sudo cat /etc/ssh/ssh_config | grep "PermitRootLogin no" | grep -v '^#'; then 
+            echo ""
+            echo "PermitRootLogin is already disabled"
+        else 
+            echo "DISABLING ROOT LOGIN..."
+            echo "PermitRootLogin no" >> /etc/ssh/ssh_config
+        fi
     fi
 
     compareFile ssh/sshd_config sshd_config
