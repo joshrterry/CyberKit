@@ -560,29 +560,29 @@ clear
 
 function selector() {
     clear
-    echo "Type any of the following numbers to select an action:"
-        echo "" 
-        echo "1. update all packages"
-        echo "2. enable automatic software updates"
-        echo ""
-        echo "3. check users and groups"
-        echo "4. secure sudo" #https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/
-        echo "5. set password policy"
-        echo ""
-        echo "6. enable and configure ufw"
-        echo "7. secure ssh"
-        echo "8. disable IPv4 forwarding" #https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
-        echo ""
-        echo "9. search home directory for unwanted files"
-        echo "10. check software"
-        echo "11. check services"
-        echo "12. set file permissions"
-        echo ""
-        echo "13. check for malware"
-        echo ""
-        echo "14. audit policy"
-        echo "15. disable usb storage"
-        echo ""
+    echo "Type any of the following numbers to select an action:
+          
+         1. update all packages
+         2. enable automatic software updates
+         
+         3. check users and groups
+         4. secure sudo 
+         5. set password policy
+         
+         6. enable and configure ufw
+         7. secure ssh
+         8. disable IPv4 forwarding
+         
+         9. search home directory for unwanted files
+         10. check software
+         11. check services
+         12. set file permissions
+         
+         13. check for malware
+         
+         14. audit policy
+         15. disable usb storage
+        "
         read -p "enter section number: " secnum
 }
 
