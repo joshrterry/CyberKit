@@ -1,5 +1,5 @@
 #!/bin/bash
-# small script for comparing files and writing to files with exemplars
+# small script for comparing config files and writing to them with exemplars
 
 function promptYN() {
     prompt="$1 [Y/n] "
