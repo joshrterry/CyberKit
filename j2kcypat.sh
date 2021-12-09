@@ -562,27 +562,27 @@ function selector() {
     clear
     echo "Type any of the following numbers to select an action:
           
-         1. update all packages
-         2. enable automatic software updates
+    1. update all packages
+    2. enable automatic software updates
          
-         3. check users and groups
-         4. secure sudo 
-         5. set password policy
+    3. check users and groups
+    4. secure sudo 
+    5. set password policy
          
-         6. enable and configure ufw
-         7. secure ssh
-         8. disable IPv4 forwarding
+    6. enable and configure ufw
+    7. secure ssh
+    8. disable IPv4 forwarding
          
-         9. search home directory for unwanted files
-         10. check software
-         11. check services
-         12. set file permissions
+    9. search home directory for unwanted files
+    10. check software
+    11. check services
+    12. set file permissions
          
-         13. check for malware
+    13. check for malware
          
-         14. audit policy
-         15. disable usb storage
-        "
+    14. audit policy
+    15. disable usb storage
+    "
         read -p "enter section number: " secnum
 }
 
