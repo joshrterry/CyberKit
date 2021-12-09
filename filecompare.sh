@@ -7,6 +7,19 @@ function promptYN() {
         prompt="$2 [y/N] "
     fi
 
+    read -p "$prompt" yn
+
+    if [[ "$1" == "-n" ]]; then
+        if [[ -z "$yn" ]]; then
+            return 1
+        else
+            return `[[ $yn =~ ^[yY]$ ]]`
+        fi
+    else
+        return `[[ $yn =~ ^[yY]?$ ]]`
+    fi
+}
+
 function filecompare() {
     echo "displaying differences in $original file"
     diff $exemplar $original
