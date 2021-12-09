@@ -22,5 +22,4 @@ read -p "exemplar file: " exemplar
 read -p "original file: " original
 filecompare
 
-
 exit
