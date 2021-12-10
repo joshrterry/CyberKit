@@ -73,7 +73,7 @@ function softwareUpdates() {
 
 function checkUsers() {
     clear
-    if promptYN -n "enter all users?"; then
+    if promptYN "enter all users?"; then
     inputUsers
     else
     echo "skipped adding new users";
@@ -81,11 +81,11 @@ function checkUsers() {
 
         # checks if the provided user from /etc/passwd was given by the user.
     # i.e. is there a user on the system that should not be there
-    if promptYN -n "check users in /etc/passwd?"; then
+    if promptYN "check users in /etc/passwd?"; then
         for username in `cat /etc/passwd | grep /bin/bash | cut -d: -f1`; do
             if grep $username configs/passwds.txt > /dev/null; then
                 echo "$username found in configs/passwds.txt, skipping"
-            elif promptYN -n "$username not found in configs/passwds.txt, remove?"; then
+            elif promptYN "$username not found in configs/passwds.txt, remove?"; then
                 deluser --remove-home $username
                 echo "$username deleted."
             fi
@@ -93,7 +93,7 @@ function checkUsers() {
     fi
 
         # get list of sudoers
-    if promptYN -n "check admin?"; then
+    if promptYN "check admin?"; then
         for username in `cat /etc/group | grep sudo | cut -d: -f4 | tr ',' '\n'`; do
             if grep $username configs/admins.txt; then
                 echo "$username is a valid admin, skipping"
@@ -108,7 +108,7 @@ function checkUsers() {
         done
     fi  
 
-    if promptYN -n "check groups?"; then
+    if promptYN "check groups?"; then
         checkGroups
     fi
 
@@ -127,7 +127,7 @@ function inputUsers() {
     echo "type out all users, separated by lines"
     echo ""
 
-    while promptYN -n "add another user?"; do
+    while promptYN "add another user?"; do
 
         read -p "username: " username
         echo "checking for $username"
@@ -139,7 +139,7 @@ function inputUsers() {
             adduser "$username"
             fi
 
-            if promptYN -n "is $username an admin?"; then
+            if promptYN "is $username an admin?"; then
                 adduser "$username" sudo #add to sudo group
                 adduser "$username" adm
                 echo "$username added to sudo and adm groups"
