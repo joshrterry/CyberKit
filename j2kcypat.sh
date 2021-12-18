@@ -3,7 +3,7 @@
 ############################################ VARIABLES ############################################
 
 PROHIBITEDSOFTWARE=("wireshark*" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups*" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind" "opensmtpd" "dos" "wpscan" "skipfish" "maltego" "nessus" "beef" "apktool" "snort" "xinetd" "")
-KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port" "phish" "forensics" "scan" "penetration")
+KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port" "phish" "forensics" "scan" "penetration" "fuzz" "proxy" "fingerprinting")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers" "/etc/cron.allow")
 SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config" "/etc/anacrontab")
@@ -59,7 +59,7 @@ function upgradeAll() {
 
 function softwareUpdates() {
     clear
-    enableEnablingOfUpdates
+    fixApt
     echo "CHANGE THE FOLLOWING SETTING UNDER UPDATES:"
     echo ""
     echo "CHECK Important security Updates"
@@ -515,9 +515,21 @@ function usbStorage() {
 
 }
 
-function enableEnablingOfUpdates() {
+function fixApt() {
     echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
     echo 'APT::Periodic::Unattended-Upgrade "1";' >> /etc/apt/apt.conf.d/20auto-upgrades
+    sudo add-apt-repository main
+    sudo add-apt-repository universe
+    sudo add-apt-repository restricted
+    sudo add-apt-repository multiverse
+    if diff -q configs/sources.list /etc/apt/sources.list; then
+        compareFile sources.list apt/sources.list
+    else
+        echo "sources.list file is OK"
+
+    fi
+
+
 }
 
 function enableServices() {
