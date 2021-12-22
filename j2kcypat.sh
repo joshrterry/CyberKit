@@ -187,6 +187,9 @@ function secureSudo() {
             else
             echo "sudo is already password protected"
         fi
+        if promptYN "set root password?"; then
+            sudo passwd root
+        fi
     fi
 
     if promptYN -n "check sudoers.d directory?"; then
