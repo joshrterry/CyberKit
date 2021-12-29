@@ -570,6 +570,9 @@ function secureFirefox() {
     for destination in /home/*/.mozilla/firefox/*/; do
         cp -v configs/firefox/user.js $destination;
     done
+    echo "select firefox from the list of available default browsers"
+    sudo update-alternatives –config x-www-browser
+    echo "check gui for additional preferences"
 }
 
 
