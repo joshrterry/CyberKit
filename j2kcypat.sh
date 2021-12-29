@@ -175,6 +175,7 @@ function searchHome() {
         sudo updatedb
         for i in {"${MEDIAFILEEXTENSIONS[@]}"}; do
             locate *$i
+            cont
         done
     fi
 }
