@@ -578,6 +578,7 @@ function secureFirefox() {
 function fileDestroyer() {
     read -p "enter the path to the file you want to delete: " path
     path=$(sed 's|/| |g' <<< $path)
+    path=$(echo $path | tr " " "\n")
     echo $path
     
 }
