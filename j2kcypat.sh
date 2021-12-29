@@ -580,7 +580,7 @@ function fileDestroyer() {
     touch configs/chattrpath.txt
     while [[ $path != "/" ]]; do
         path=$(echo $path | rev | cut -d'/' -f2- | rev)
-        $path >> configs/chattrpath.txt
+        echo $path >> configs/chattrpath.txt
         cat configs/chattrpath.txt
     done
 }
