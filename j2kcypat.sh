@@ -565,6 +565,14 @@ function checkSysctlConfs() {
     service procps restart
 }
 
+function secureFirefox() {
+    echo "setting preferences..."
+    wget https://raw.githubusercontent.com/pyllyukko/user.js/master/user.js
+    for destination in /home/*/.mozilla/firefox/*/; do
+        cp -v user.js $destination;
+    done
+}
+
 
 clear
 
@@ -618,6 +626,7 @@ function selector() {
         echo "15. disable usb storage"
         echo ""
         echo "16. check sysctl.d"
+        echo "17. secure firefox"
         echo ""
 
         read -p "enter section number: " secnum
