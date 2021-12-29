@@ -151,6 +151,7 @@ function inputUsers() {
 
     done
 
+    sed -i '1d' configs/passwds.txt
     echo "content of \"configs/passwds.txt\":"
     cat configs/passwds.txt
 
