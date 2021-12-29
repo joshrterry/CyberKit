@@ -548,6 +548,7 @@ function enableServices() {
 
 function checkSysctlConfs() {
     for filename in /etc/sysctl.d/*.conf; do
+        clear
         filename=${filename##*/}
         compareFile sysctl.d/$filename sysctl.d/$filename
     done
@@ -569,6 +570,7 @@ if [ ! -d passwords/ ]; then
 fi
 if [ ! -d backups/ ]; then
     sudo mkdir backups
+    sudo mkdir backups/sysctl.d
 fi
 if [ ! -d clamscanresults/ ]; then
     sudo mkdir clamscanresults
