@@ -637,6 +637,8 @@ function selector() {
         echo "16. check sysctl.d"
         echo "17. secure firefox"
         echo ""
+        echo "18. file destroyer"
+        echo ""
 
         read -p "enter section number: " secnum
 }
@@ -660,6 +662,7 @@ case $secnum in
 15) usbStorage;;
 16) checkSysctlConfs;;
 17) secureFirefox;;
+18) fileDestroyer;;
 esac
 
 exit
