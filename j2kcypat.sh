@@ -575,6 +575,13 @@ function secureFirefox() {
     echo "check gui for additional preferences"
 }
 
+function fileDestroyer() {
+    read -p "enter the path to the file you want to delete: " path
+    sed 's/\///' path
+    echo $path
+    
+}
+
 
 clear
 
