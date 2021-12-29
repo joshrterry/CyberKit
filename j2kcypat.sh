@@ -12,6 +12,7 @@ INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.servi
 CRITICALSOFTWARE=("rsyslog")
 CRITICALSERVICES=("rsyslog")
 MEDIAFILEEXTENSIONS=(".jpeg" ".jpg" ".gif" ".tiff" ".bmp" ".aac" ".mp3" ".wav" ".wma" ".ac3" ".dts" ".aiff" ".asf" ".flac" ".adpcm" ".dsd" ".lpcm" ".ogg" ".mpg" ".avi" ".mov" ".mp4" ".mp2" ".mkv" ".webm")
+FILEPATH=""
 
 ########################################### SCRIPT TOOLS ###########################################
 
@@ -577,11 +578,15 @@ function secureFirefox() {
 
 function fileDestroyer() {
     read -p "enter the path to the file you want to delete: " path
-    while [[ $path != "" ]]; do
-        echo "removing chattr attributes on $path"
-        chattr -ia $path 
-        path=$(echo $path | rev | cut -d'/' -f2- | rev)
+    FILEPATH=$path
+    while [[ $FILEPATH != "" ]]; do
+        echo "removing chattr attributes on $FILEPATH"
+        chattr -ia $FILEPATH
+        path=$(echo $FILEPATH | rev | cut -d'/' -f2- | rev)
     done
+    if promptYN -n "are you sure you would like to delete $path?"; then
+        sudo rm -rf $path
+    fi
 
 }
 
