@@ -582,7 +582,7 @@ function fileDestroyer() {
     while [[ $FILEPATH != "" ]]; do
         echo "removing chattr attributes on $FILEPATH"
         chattr -ia $FILEPATH
-        path=$(echo $FILEPATH | rev | cut -d'/' -f2- | rev)
+        FILEPATH=$(echo $FILEPATH | rev | cut -d'/' -f2- | rev)
     done
     if promptYN -n "are you sure you would like to delete $path?"; then
         sudo rm -rf $path
