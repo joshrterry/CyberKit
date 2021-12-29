@@ -627,7 +627,7 @@ case $secnum in
 13) checkMalware;;
 14) auditPolicy;;
 15) usbStorage;;
-16 checkSysctlConfs;;
+16) checkSysctlConfs;;
 esac
 
 exit
