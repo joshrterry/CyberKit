@@ -532,7 +532,6 @@ function fixApt() {
 
     fi
 
-
 }
 
 function enableServices() {
