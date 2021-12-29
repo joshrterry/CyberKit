@@ -546,6 +546,13 @@ function enableServices() {
     done
 }
 
+function checkSysctlConfs() {
+    for filename in /etc/sysctl.d/*.conf; do
+        clear
+        compareFile sysctl.d/$filename sysctl.d/$filename
+    done
+}
+
 
 clear
 
@@ -597,6 +604,9 @@ function selector() {
         echo "14. audit policy"
         echo "15. disable usb storage"
         echo ""
+        echo "16. check sysctl.d"
+        echo ""
+
         read -p "enter section number: " secnum
 }
 
@@ -617,6 +627,7 @@ case $secnum in
 13) checkMalware;;
 14) auditPolicy;;
 15) usbStorage;;
+16 checkSysctlConfs;;
 esac
 
 exit
