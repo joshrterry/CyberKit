@@ -173,7 +173,7 @@ function searchHome() {
         sudo apt install mlocate -yy
         echo "Searching for media files..."
         sudo updatedb
-        for i in {"${MEDIAFILEEXTENTIONS[@]}"}; do
+        for i in {"${MEDIAFILEEXTENSIONS[@]}"}; do
             locate *$i
         done
     fi
