@@ -567,9 +567,8 @@ function checkSysctlConfs() {
 
 function secureFirefox() {
     echo "setting preferences..."
-    wget https://raw.githubusercontent.com/pyllyukko/user.js/master/user.js
     for destination in /home/*/.mozilla/firefox/*/; do
-        cp -v user.js $destination;
+        cp -v configs/firefox/user.js $destination;
     done
 }
 
