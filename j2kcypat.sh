@@ -577,10 +577,12 @@ function secureFirefox() {
 
 function fileDestroyer() {
     read -p "enter the path to the file you want to delete: " path
-    path=$(sed '$s|/.*/| |' <<< $path)
     touch configs/chattrpath.txt
-    echo "$path" | tr " " "\n" > configs/chattrpath.txt
-    cat configs/chattrpath.txt
+    while [[ $path != "/" ]]; do
+        path=$(echo $path | rev | cut -d'/' -f2- | rev)
+        $path >> configs/chattrpath.txt
+        cat configs/chattrpath.txt
+    done
 }
 
 
