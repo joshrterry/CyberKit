@@ -549,8 +549,7 @@ function enableServices() {
 function checkSysctlConfs() {
     for filename in /etc/sysctl.d/*.conf; do
         filename=${filename##*/}
-        echo $filename
-        # compareFile sysctl.d/$filename sysctl.d/$filename
+        compareFile sysctl.d/$filename sysctl.d/$filename
     done
 }
 
