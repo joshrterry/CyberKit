@@ -581,8 +581,9 @@ function fileDestroyer() {
     while [[ $path != "/" ]]; do
         path=$(echo $path | rev | cut -d'/' -f2- | rev)
         echo $path >> configs/chattrpath.txt
-        cat configs/chattrpath.txt
     done
+        cat configs/chattrpath.txt
+
 }
 
 
