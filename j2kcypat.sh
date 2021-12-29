@@ -11,6 +11,7 @@ SEVENHUNDRED=("/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron
 INSECURESERVICES=("avahi-daaemon.service" "avahi-daemon.socket" "opensmtpd.service")
 CRITICALSOFTWARE=("rsyslog")
 CRITICALSERVICES=("rsyslog")
+MEDIAFILEEXTENSIONS=(".jpeg" ".jpg" ".gif" ".tiff" ".bmp" ".aac" ".mp3" ".wav" ".wma" ".ac3" ".dts" ".aiff" ".asf" ".flac" ".adpcm" ".dsd" ".lpcm" ".ogg" ".mpg" ".avi" ".mov" ".mp4" ".mp2" ".mkv" ".webm")
 
 ########################################### SCRIPT TOOLS ###########################################
 
@@ -161,12 +162,20 @@ function inputUsers() {
 
 function searchHome() {
     clear
-    if promptYN -n "install tree"; then
-    sudo apt install tree -yy
-    echo "Searching home directory..."
-    sudo tree /home/
+    if promptYN -n "install tree?"; then
+        sudo apt install tree -yy
+        echo "Searching home directory..."
+        sudo tree /home/
     else 
-    echo "unable to search home directory";
+        echo "unable to search home directory";
+    fi
+    if promptYN -n "install mlocate?"; then
+        sudo apt install mlocate -yy
+        echo "Searching for media files..."
+        sudo updatedb
+        for i in {"${MEDIAFILEEXTENTIONS[@]}"}; do
+            locate *$i
+        done
     fi
 }
 
@@ -552,6 +561,7 @@ function checkSysctlConfs() {
         filename=${filename##*/}
         compareFile sysctl.d/$filename sysctl.d/$filename
     done
+    service procps restart
 }
 
 
