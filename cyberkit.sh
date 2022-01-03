@@ -121,8 +121,10 @@ function checkUsers() {
 function inputUsers() {
     touch configs/passwds.txt
     touch configs/admins.txt
+    touch configs/users.txt
     > configs/passwds.txt
     > configs/admins.txt
+    > configs/users.txt
     
     clear
 
@@ -149,6 +151,7 @@ function inputUsers() {
             fi 
 
             echo "${username}:0ldScona2021!" >> configs/passwds.txt
+            echo "${username}" >> configs/users.txt
 
     done
 
@@ -268,10 +271,12 @@ function passwordPolicy() {
     fi
 
     compareFile login.defs login.defs
-
     compareFile pam.d/common-password common-password
-
     compareFile pam.d/common-auth common-auth
+
+    if promptYN -n "set user password expiry"; then
+        cat configs/users.txt | chage -m 1 -M 90 -W 7
+    fi
 
 }
 
@@ -597,7 +602,7 @@ echo ""
 echo "1. ENSURE THIS SCRIPT IS RUN AS ROOT"
 echo "2. RUN SCRIPT IN ~/cyberkit"
 echo "3. COMPLETE FORENSICS QUESTIONS FIRST"
-echo "4. SET FIREFOX SETTINGS THROUGH GUI"
+echo "4. SET FIREFOX PREFERENCES THROUGH GUI"
 echo ""
 
 if [ ! -d passwords/ ]; then
@@ -618,7 +623,7 @@ clear
 
 function selector() {
     clear
-    
+     
     echo "Type any of the following numbers to select an action:"
         echo "" 
         echo "1. update all packages"
