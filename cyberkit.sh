@@ -275,8 +275,9 @@ function passwordPolicy() {
     compareFile pam.d/common-auth common-auth
 
     if promptYN -n "set user password expiry"; then
+        useradd -D -f 30
         while read users; do
-            chage -m 1 -M 90 -W 7 $users
+            chage -m 1 -M 90 -W 7 --inactive 30 $users
         done <configs/users.txt
     fi
 
