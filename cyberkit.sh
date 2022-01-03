@@ -276,7 +276,7 @@ function passwordPolicy() {
 
     if promptYN -n "set user password expiry"; then
         while read users; do
-         | chage -m 1 -M 90 -W 7 $users
+            chage -m 1 -M 90 -W 7 $users
         done <configs/users.txt
     fi
 
