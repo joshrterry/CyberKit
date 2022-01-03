@@ -545,7 +545,7 @@ function fixApt() {
     sudo add-apt-repository restricted
     sudo add-apt-repository multiverse
     if diff -q configs/sources.list /etc/apt/sources.list; then
-        compareFile sources.list apt/sources.list
+        compareFile apt/sources.list sources.list
     else
         echo "sources.list file is OK"
 
