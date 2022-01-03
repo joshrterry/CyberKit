@@ -618,6 +618,7 @@ clear
 
 function selector() {
     clear
+    
     echo "Type any of the following numbers to select an action:"
         echo "" 
         echo "1. update all packages"
