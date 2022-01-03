@@ -44,7 +44,7 @@ function compareFile() {
     echo "displaying differences in $1 file"
     diff configs/$2 /etc/$1
     if promptYN -n "overwrite /etc/$1?"; then
-        echo "backing up to cypat/backups..."
+        echo "backing up to cyberkit/backups..."
         cp /etc/$1 backups/$2
         echo "overwriting /etc/$1..."
         cat configs/$2 > /etc/$1
@@ -483,7 +483,7 @@ function checkMalware() {
         sudo killall freshclam
         sudo freshclam
         if promptYN "would you like to scan system for malware? (NOTE: this may take a while)"; then
-            echo "infected files will be moved to ~/cypat/clamscanresults"
+            echo "infected files will be moved to ~/cyberkit/clamscanresults"
             cont
             clamscan -r --move=clamscanresults /
         fi
