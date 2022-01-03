@@ -592,10 +592,10 @@ function fileDestroyer() {
 
 clear
 
-echo "########## Welcome to J2K05's CyberPatriot Script ##########"
+echo "########## Welcome to J2K05's CyberKit Script ##########"
 echo ""
 echo "1. ENSURE THIS SCRIPT IS RUN AS ROOT"
-echo "2. RUN SCRIPT IN ~/cypat"
+echo "2. RUN SCRIPT IN ~/cyberkit"
 echo "3. COMPLETE FORENSICS QUESTIONS FIRST"
 echo "4. SET FIREFOX SETTINGS THROUGH GUI"
 echo ""
