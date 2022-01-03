@@ -114,7 +114,6 @@ function checkUsers() {
         checkGroups
     fi
 
-    cont
     checkUID0
 }
 
@@ -178,6 +177,7 @@ function searchHome() {
         echo "Searching for media files..."
         sudo updatedb
         for i in {"${MEDIAFILEEXTENSIONS[@]}"}; do
+            echo "showing results for files ending in $i:"
             locate *$i
             cont
         done
@@ -278,6 +278,7 @@ function passwordPolicy() {
         useradd -D -f 30
         while read users; do
             chage -m 1 -M 90 -W 7 --inactive 30 $users
+            echo "chage set for $users"
         done <configs/users.txt
     fi
 
