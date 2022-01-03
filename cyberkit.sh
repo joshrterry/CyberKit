@@ -2,7 +2,7 @@
 
 ############################################ VARIABLES ############################################
 
-PROHIBITEDSOFTWARE=("wireshark*" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups*" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind" "opensmtpd" "dos" "wpscan" "skipfish" "maltego" "nessus" "beef" "apktool" "snort" "xinetd" "")
+PROHIBITEDSOFTWARE=("wireshark*" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups*" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind" "opensmtpd" "dos" "wpscan" "skipfish" "maltego" "nessus" "beef" "apktool" "snort" "xinetd" "doona" "proxychains" "xprobe")
 KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port" "phish" "forensics" "scan" "penetration" "fuzz" "proxy" "fingerprinting")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers" "/etc/cron.allow")
@@ -587,7 +587,6 @@ function fileDestroyer() {
     if promptYN -n "are you sure you would like to delete $path?"; then
         sudo rm -rf $path
     fi
-
 }
 
 
@@ -645,7 +644,7 @@ function selector() {
         echo "16. check sysctl.d"
         echo "17. secure firefox"
         echo ""
-        echo "18. file destroyer"
+        echo "18. file destroyer" # removes chattr attributes on all parent directories
         echo ""
 
         read -p "enter section number: " secnum
