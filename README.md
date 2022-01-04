@@ -1,3 +1,3 @@
 # CyberKit
 
-A collection of Linux hardening scripts made by Josh Terry
+A Linux hardening script made by Josh Terry
