@@ -128,7 +128,7 @@ function inputUsers() {
     
     clear
 
-    echo "enter users portion of readme: "
+    echo "enter users portion of readme (be sure to include any new users): "
     nano configs/readme.txt
     cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
@@ -287,7 +287,7 @@ function passwordPolicy() {
     echo "creating backups directory..."
     clear
     if promptYN -n "install libpam-cracklib"; then
-    sudo apt install libpam-cracklib -yy  
+    sudo dnf install libpam-cracklib -yy  
     fi
 
     compareFile login.defs login.defs
