@@ -130,8 +130,9 @@ function inputUsers() {
 
     echo "Paste users portion of readme, then ctrl+d"
     userlist=$(cat)
+    echo $userlist
     echo $userlist | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
-    
+    cat configs/readme.txt
 
     cat configs/readme.txt | while read username; do
         # read -p "username: " username
