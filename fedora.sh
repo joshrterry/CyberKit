@@ -133,8 +133,7 @@ function inputUsers() {
     echo $userlist | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
     
 
-    for username in `cat configs/readme.txt`; do
-
+    cat /configs/readme.txt | while read username do
         # read -p "username: " username
         echo "checking for $username"
 
