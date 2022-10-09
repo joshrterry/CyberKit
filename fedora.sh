@@ -305,7 +305,6 @@ function passwordPolicy() {
 }
 
 function checkSoftware() {
-    sudo dnf install dpkg -yy
     clear
     if promptYN "install critical packages?"; then
         dnf update
@@ -322,7 +321,7 @@ function checkSoftware() {
 
     for i in "${PROHIBITEDSOFTWARE[@]}"; do
         clear
-        if dpkg -l | grep -i $i; then
+        if dnf list | grep -i $i; then
             if promptYN -n "remove $i?"; then
                 sudo dnf remove $i -yy
             fi
@@ -331,18 +330,18 @@ function checkSoftware() {
 
     clear
 
-    for i in "${KEYWORDS[@]}"; do
-        clear
-        echo "searching for packages with '$i' in the description"
-        if dpkg -l | grep -i $i; then
-            while promptYN -n "remove a package with this key word?"; do
-            read -p "which package would you like to remove: " package
-        if promptYN -n "remove $package"; then
-            sudo dnf remove $package -yy
-        fi
-        done
-    fi
-    done
+    # for i in "${KEYWORDS[@]}"; do
+    #     clear
+    #     echo "searching for packages with '$i' in the description"
+    #     if dpkg -l | grep -i $i; then
+    #         while promptYN -n "remove a package with this key word?"; do
+    #         read -p "which package would you like to remove: " package
+    #     if promptYN -n "remove $package"; then
+    #         sudo dnf remove $package -yy
+    #     fi
+    #     done
+    # fi
+    # done
 
     sudo dnf autoremove
 
