@@ -121,6 +121,8 @@ function inputUsers() {
     touch configs/passwds.txt
     touch configs/admins.txt
     touch configs/users.txt
+    touch configs/readme.txt
+    > configs/readme.txt
     > configs/passwds.txt
     > configs/admins.txt
     > configs/users.txt
@@ -128,7 +130,7 @@ function inputUsers() {
     clear
 
     read -p "paste users list from reamdme:" userlist
-    echo $userlist | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' userlist > configs/readme.txt
+    echo $userlist | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
     
 
     for username in `cat configs/readme.txt`; do
