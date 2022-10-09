@@ -130,11 +130,9 @@ function inputUsers() {
 
     echo "enter users portion of readme: "
     nano configs/readme.txt
-    cat configs/readme.txt
-    cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
-    cat configs/readme.txt
+    cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
-    cat configs/readme.txt | while read username; do
+    cat configs/users.txt | while read username; do
         # read -p "username: " username
         echo "checking for $username"
 
@@ -153,26 +151,23 @@ function inputUsers() {
         # fi 
 
         echo "${username}:0ldScona2021!" >> configs/passwds.txt
-        echo "${username}" >> configs/users.txt
 
     done
 
-    echo $userlist | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
+    cat configs/readme.txt | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
-      for username in `cat configs/readme.txt`; do
-
+    cat configs/users.txt | while read username; do
         # read -p "username: " username
         echo "checking for $username"
 
-            # if user not found
-            if cat /etc/passwd | grep $username &>/dev/null; then
-                echo "$username exists in /etc/passwd"
-            elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
-            adduser "$username"
-            fi
+        # if user not found
+        if cat /etc/passwd | grep $username &>/dev/null; then
+            echo "$username exists in /etc/passwd"
+        elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+        adduser "$username"
+        fi
 
-            echo "${username}:0ldScona2021!" >> configs/passwds.txt
-            echo "${username}" >> configs/users.txt
+        echo "${username}:0ldScona2021!" >> configs/passwds.txt
 
     done
 
