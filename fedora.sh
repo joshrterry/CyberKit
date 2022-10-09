@@ -130,6 +130,7 @@ function inputUsers() {
 
     echo "enter users portion of readme: "
     nano configs/readme.txt
+    cat configs/readme.txt
     cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
     cat configs/readme.txt
 
