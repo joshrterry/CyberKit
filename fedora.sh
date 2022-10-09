@@ -156,7 +156,7 @@ function inputUsers() {
 
     done
 
-    echo $userlist | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' userlist > configs/readme.txt
+    echo $userlist | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
 
       for username in `cat configs/readme.txt`; do
 
