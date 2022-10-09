@@ -1,3 +1,3 @@
 # CyberKit
 
-A Linux hardening script made by Josh Terry
+Cyberpatriot scripts for Ubuntu and Fedora
