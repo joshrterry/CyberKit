@@ -120,18 +120,21 @@ function inputUsers() {
     touch configs/passwds.txt
     touch configs/admins.txt
     touch configs/users.txt
+    touch configs/readme.txt
+    > configs/readme.txt
     > configs/passwds.txt
     > configs/admins.txt
     > configs/users.txt
     
     clear
 
-    echo "type out all users, separated by lines"
-    echo ""
+    read -p "paste users list from reamdme:" userlist
+    echo $userlist | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
+    
 
-    while promptYN "add another user?"; do
+    for username in `cat configs/readme.txt`; do
 
-        read -p "username: " username
+        # read -p "username: " username
         echo "checking for $username"
 
             # if user not found
@@ -141,12 +144,31 @@ function inputUsers() {
             adduser "$username"
             fi
 
-            if promptYN "is $username an admin?"; then
-                usermod -a -G wheel "$username" #add to sudo group
-                usermod -a -G adm "$username"
-                echo "$username added to sudo and adm groups"
-                echo "$username" >> configs/admins.txt
-            fi 
+            # if promptYN "is $username an admin?"; then
+            usermod -a -G wheel "$username" #add to sudo group
+            usermod -a -G adm "$username"
+            echo "$username added to sudo and adm groups"
+            echo "$username" >> configs/admins.txt
+            # fi 
+
+            echo "${username}:0ldScona2021!" >> configs/passwds.txt
+            echo "${username}" >> configs/users.txt
+
+    done
+
+    echo $userlist | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' userlist > configs/readme.txt
+
+      for username in `cat configs/readme.txt`; do
+
+        # read -p "username: " username
+        echo "checking for $username"
+
+            # if user not found
+            if cat /etc/passwd | grep $username &>/dev/null; then
+                echo "$username exists in /etc/passwd"
+            elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+            adduser "$username"
+            fi
 
             echo "${username}:0ldScona2021!" >> configs/passwds.txt
             echo "${username}" >> configs/users.txt
