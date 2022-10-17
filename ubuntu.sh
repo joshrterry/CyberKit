@@ -88,7 +88,7 @@ function checkUsers() {
             if grep $username configs/passwds.txt > /dev/null; then
                 echo "$username found in configs/passwds.txt, skipping"
             elif promptYN "$username not found in configs/passwds.txt, remove?"; then
-                deluser --remove-home $username
+                userdel $username
                 echo "$username deleted."
             fi
         done
@@ -99,11 +99,11 @@ function checkUsers() {
         for username in `cat /etc/group | grep sudo | cut -d: -f4 | tr ',' '\n'`; do
             if grep $username configs/admins.txt; then
                 echo "$username is a valid admin, skipping"
-            elif promptYN "$username is in the sudo group but not a valid sudoer, remove from sudo?"; then
-                deluser $username sudo
-                echo "$username removed from sudo group."
+            elif promptYN "$username is in the wheel group but not a valid sudoer, remove from sudo?"; then
+                gpasswd -d $username sudo
+                echo "$username removed from wheel group."
                 if cat /etc/group | grep adm | grep $username && promptYN "user also in \"adm\" group, remove?"; then
-                    deluser $username adm
+                    gpasswd -d $username adm
                     echo "$username removed from adm group."
                 fi
             fi
@@ -129,50 +129,46 @@ function inputUsers() {
     
     clear
 
-    read -p "paste users list from reamdme:" userlist
-    echo $userlist | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/readme.txt
-    
+    echo "enter users portion of readme (be sure to include any new users): "
+    nano configs/readme.txt
+    cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
-    for username in `cat configs/readme.txt`; do
-
+    cat configs/users.txt | while read username; do
         # read -p "username: " username
         echo "checking for $username"
 
-            # if user not found
-            if cat /etc/passwd | grep $username &>/dev/null; then
-                echo "$username exists in /etc/passwd"
-            elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
-            adduser "$username"
-            fi
+        # if user not found
+        if cat /etc/passwd | grep $username &>/dev/null; then
+            echo "$username exists in /etc/passwd"
+        elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+        adduser "$username"
+        fi
 
-            # if promptYN "is $username an admin?"; then
-            adduser "$username" sudo #add to sudo group
-            adduser "$username" adm
-            echo "$username added to sudo and adm groups"
-            echo "$username" >> configs/admins.txt
-            # fi 
+        # if promptYN "is $username an admin?"; then
+        usermod -a -G sudo "$username" #add to sudo group
+        usermod -a -G adm "$username"
+        echo "$username added to sudo and adm groups"
+        echo "$username" >> configs/admins.txt
+        # fi 
 
-            echo "${username}:0ldScona2021!" >> configs/passwds.txt
-            echo "${username}" >> configs/users.txt
+        echo "${username}:0ldScona2021!" >> configs/passwds.txt
 
     done
 
-    echo $userlist | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' userlist > configs/readme.txt
+    cat configs/readme.txt | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
-      for username in `cat configs/readme.txt`; do
-
+    cat configs/users.txt | while read username; do
         # read -p "username: " username
         echo "checking for $username"
 
-            # if user not found
-            if cat /etc/passwd | grep $username &>/dev/null; then
-                echo "$username exists in /etc/passwd"
-            elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
-            adduser "$username"
-            fi
+        # if user not found
+        if cat /etc/passwd | grep $username &>/dev/null; then
+            echo "$username exists in /etc/passwd"
+        elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+        adduser "$username"
+        fi
 
-            echo "${username}:0ldScona2021!" >> configs/passwds.txt
-            echo "${username}" >> configs/users.txt
+        echo "${username}:0ldScona2021!" >> configs/passwds.txt
 
     done
 
