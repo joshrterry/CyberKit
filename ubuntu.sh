@@ -88,7 +88,7 @@ function checkUsers() {
             if grep $username configs/passwds.txt > /dev/null; then
                 echo "$username found in configs/passwds.txt, skipping"
             elif promptYN "$username not found in configs/passwds.txt, remove?"; then
-                deluser --remove-home $username
+                userdel $username
                 echo "$username deleted."
             fi
         done
@@ -96,14 +96,14 @@ function checkUsers() {
 
         # get list of sudoers
     if promptYN "check admin?"; then
-        for username in `cat /etc/group | grep sudo | cut -d: -f4 | tr ',' '\n'`; do
+        for username in `cat /etc/group | grep wheel | cut -d: -f4 | tr ',' '\n'`; do
             if grep $username configs/admins.txt; then
                 echo "$username is a valid admin, skipping"
-            elif promptYN "$username is in the wheel group but not a valid sudoer, remove from sudo?"; then
-                deluser $username sudo
+            elif promptYN "$username is in the wheel group but not a valid sudoer, remove from wheel?"; then
+                gpasswd -d $username wheel
                 echo "$username removed from wheel group."
                 if cat /etc/group | grep adm | grep $username && promptYN "user also in \"adm\" group, remove?"; then
-                    deluser $username adm
+                    gpasswd -d $username adm
                     echo "$username removed from adm group."
                 fi
             fi
@@ -145,8 +145,8 @@ function inputUsers() {
         fi
 
         # if promptYN "is $username an admin?"; then
-        adduser "$username" sudo #add to sudo group
-        adduser "$username" adm
+        usermod -a -G wheel "$username" #add to sudo group
+        usermod -a -G adm "$username"
         echo "$username added to sudo and adm groups"
         echo "$username" >> configs/admins.txt
         # fi 
