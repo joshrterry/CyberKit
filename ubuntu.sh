@@ -143,7 +143,7 @@ function inputUsers() {
             echo "$username exists in /etc/passwd"
         elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
             echo "Adding user"
-            adduser "$username"
+            useradd "$username"
         fi
 
         # if promptYN "is $username an admin?"; then
@@ -168,7 +168,7 @@ function inputUsers() {
             if cat /etc/passwd | grep $username &>/dev/null; then
                 echo "$username exists in /etc/passwd"
             elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
-                adduser "$username"
+                useradd "$username"
             fi
 
             echo "${username}:0ldScona2021!" >> configs/passwds.txt
