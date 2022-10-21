@@ -315,7 +315,7 @@ function checkSoftwareBeta() {
 
     for app in $installed; do
         if ! cat configs/manifest.txt | grep -q $app; then
-            if promptYN "$app not found in manifest. Would you like to delete?"; then
+            if promptYN -n "$app not found in manifest. Would you like to delete?"; then
                 sudo apt purge $app -yy
             fi
         fi
