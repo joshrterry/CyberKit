@@ -1829,4 +1829,3 @@ snap:gnome-3-38-2004
 snap:bare
 snap:gtk-common-themes
 snap:snap-store
-lib*
