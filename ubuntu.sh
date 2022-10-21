@@ -319,6 +319,7 @@ function checkSoftwareBeta() {
                 sudo apt purge $app -yy
             fi
         fi
+    done
 }
 
 function checkSoftware() {
@@ -694,6 +695,7 @@ function selector() {
         echo ""
         echo "18. file destroyer" # removes chattr attributes on all parent directories
         echo ""
+        echo "18. check software [BETA]"
 
         read -p "enter section number: " secnum
 }
@@ -718,6 +720,7 @@ case $secnum in
 16) checkSysctlConfs;;
 17) secureFirefox;;
 18) fileDestroyer;;
+19) checkSoftwareBeta;;
 esac
 
 exit
