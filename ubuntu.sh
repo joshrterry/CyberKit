@@ -141,7 +141,7 @@ function inputUsers() {
         # if user not found
         if cat /etc/passwd | grep $username &>/dev/null; then
             echo "$username exists in /etc/passwd"
-        elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+        elif promptYN "$username not found in /etc/passwd. create user $username?"; then
             echo "Adding user"
             useradd "$username"
         fi
@@ -167,7 +167,7 @@ function inputUsers() {
         # if user not found
             if cat /etc/passwd | grep $username &>/dev/null; then
                 echo "$username exists in /etc/passwd"
-            elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+            elif promptYN "$username not found in /etc/passwd. create user $username?"; then
                 useradd "$username"
             fi
 
