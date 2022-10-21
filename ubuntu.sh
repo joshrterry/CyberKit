@@ -136,6 +136,7 @@ function inputUsers() {
     cat configs/users.txt | while read username; do
         # read -p "username: " username
         echo "checking for $username"
+        echo "HERE 1"
 
         # if user not found
         if cat /etc/passwd | grep $username &>/dev/null; then
