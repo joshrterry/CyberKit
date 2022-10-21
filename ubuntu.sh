@@ -133,7 +133,7 @@ function inputUsers() {
     nano configs/readme.txt
     cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
-    cat configs/users.txt | while read username; do
+    while read username; do
         # read -p "username: " username
         echo "checking for $username"
 
@@ -153,8 +153,8 @@ function inputUsers() {
         # fi 
 
         echo "${username}:0ldScona2021!" >> configs/passwds.txt
-
-    done
+ 
+    done < configs/users.txt
 
     cat configs/readme.txt | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
