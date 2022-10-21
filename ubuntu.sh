@@ -297,6 +297,10 @@ function passwordPolicy() {
 
     if promptYN -n "set user password expiry"; then
         useradd -D -f 30
+        while read admins; do
+            chage -m 1 -M 90 -W 7 --inactive 30 $admins
+            echo "chage set for $admins"
+        done <configs/admins.txt
         while read users; do
             chage -m 1 -M 90 -W 7 --inactive 30 $users
             echo "chage set for $users"
