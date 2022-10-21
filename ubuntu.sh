@@ -137,22 +137,22 @@ function inputUsers() {
         # read -p "username: " username
         echo "checking for $username"
 
-            # if user not found
-            if cat /etc/passwd | grep $username &>/dev/null; then
-                echo "$username exists in /etc/passwd"
-            elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
-                echo "Adding user"
-                adduser "$username"
-            fi
+        # if user not found
+        if cat /etc/passwd | grep $username &>/dev/null; then
+            echo "$username exists in /etc/passwd"
+        elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+            echo "Adding user"
+            adduser "$username"
+        fi
 
-            # if promptYN "is $username an admin?"; then
-            adduser "$username" sudo  #add to sudo group
-            adduser "$username" adm  #add to sudo group
-            echo "$username added to sudo and adm groups"
-            echo "$username" >> configs/admins.txt
-            # fi 
+        # if promptYN "is $username an admin?"; then
+        adduser "$username" sudo  #add to sudo group
+        adduser "$username" adm  #add to sudo group
+        echo "$username added to sudo and adm groups"
+        echo "$username" >> configs/admins.txt
+        # fi 
 
-            echo "${username}:0ldScona2021!" >> configs/passwds.txt
+        echo "${username}:0ldScona2021!" >> configs/passwds.txt
 
     done
 
