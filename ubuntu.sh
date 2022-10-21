@@ -695,7 +695,7 @@ function selector() {
         echo ""
         echo "18. file destroyer" # removes chattr attributes on all parent directories
         echo ""
-        echo "18. check software [BETA]"
+        echo "19. check software [BETA]"
 
         read -p "enter section number: " secnum
 }
