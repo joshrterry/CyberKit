@@ -131,7 +131,7 @@ function inputUsers() {
 
     echo "enter users portion of readme (be sure to include any new users): "
     nano configs/readme.txt
-    cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' >> configs/users.txt
+    cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
     while read username; do
         # read -p "username: " username
@@ -156,7 +156,7 @@ function inputUsers() {
 
     done < configs/users.txt
 
-    cat configs/readme.txt | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' >> configs/users.txt
+    cat configs/readme.txt | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
 
     while read username; do
         # read -p "username: " username
