@@ -143,8 +143,6 @@ function inputUsers() {
         elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
             echo "Adding user"
             adduser "$username"
-        else
-            echo "either case"
         fi
 
         # if promptYN "is $username an admin?"; then
