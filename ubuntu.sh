@@ -96,12 +96,12 @@ function checkUsers() {
 
         # get list of sudoers
     if promptYN "check admin?"; then
-        for username in `cat /etc/group | grep wheel | cut -d: -f4 | tr ',' '\n'`; do
+        for username in `cat /etc/group | grep sudo | cut -d: -f4 | tr ',' '\n'`; do
             if grep $username configs/admins.txt; then
                 echo "$username is a valid admin, skipping"
-            elif promptYN "$username is in the wheel group but not a valid sudoer, remove from wheel?"; then
-                gpasswd -d $username wheel
-                echo "$username removed from wheel group."
+            elif promptYN "$username is in the sudo group but not a valid sudoer, remove from sudo?"; then
+                gpasswd -d $username sudo
+                echo "$username removed from sudo group."
                 if cat /etc/group | grep adm | grep $username && promptYN "user also in \"adm\" group, remove?"; then
                     gpasswd -d $username adm
                     echo "$username removed from adm group."
