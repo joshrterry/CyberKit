@@ -141,8 +141,8 @@ function inputUsers() {
         if cat /etc/passwd | grep $username &>/dev/null; then
             echo "$username exists in /etc/passwd"
         elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
-        echo "Adding user"
-        adduser "$username"
+            echo "Adding user"
+            adduser "$username"
         fi
 
         # if promptYN "is $username an admin?"; then
