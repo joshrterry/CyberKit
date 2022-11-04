@@ -115,6 +115,7 @@ function checkUsers() {
     fi
 
     checkUID0
+    checknologin
 }
 
 function inputUsers() {
@@ -207,13 +208,13 @@ function searchHome() {
 
 function secureSudo() {
     clear
-    if promptYN -n "disable local root login?"; then
+    if promptYN "disable local root login?"; then
         clear
         sudo usermod -p '!' root
         echo "root login disabled"
     fi
 
-    if promptYN -n "check for password protection?"; then
+    if promptYN "check for password protection?"; then
         clear
         SUDOGREP=$(grep NOPASSWD /etc/sudoers)
         if echo $SUDOGREP | grep -q NOPASSWD; then
@@ -222,18 +223,19 @@ function secureSudo() {
             else
             echo "sudo is already password protected"
         fi
+
         if promptYN "set root password?"; then
             sudo passwd root
         fi
     fi
 
-    if promptYN -n "check sudoers.d directory?"; then
+    if promptYN "check sudoers.d directory?"; then
         clear
         echo "searching /etc/sudoers.d/"
         ls -l /etc/sudoers.d/
     fi
 
-    if promptYN -n "check sudoers file?"; then
+    if promptYN "check sudoers file?"; then
         clear
         echo "displaying differences in sudoers file:"
         echo ""
@@ -243,7 +245,7 @@ function secureSudo() {
         fi
     fi
 
-    if promptYN -n "check /etc/sudoers.d/README?"; then
+    if promptYN "check /etc/sudoers.d/README?"; then
         clear
         compareFile sudoers.d/README sudoersd.txt
     fi
@@ -470,6 +472,13 @@ function checkUID0() {
         fi
     done
     
+}
+
+function checknologin() {
+
+    for username in `cat configs/passwds.txt | cut -f1 -d:`; do
+        cat /etc/passwd | grep $username | grep nologin
+
 }
 
 function checkGroups() {
