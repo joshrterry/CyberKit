@@ -478,7 +478,7 @@ function checknologin() {
 
     for username in `cat configs/passwds.txt | cut -f1 -d:`; do
         cat /etc/passwd | grep $username | grep nologin
-
+    done
 }
 
 function checkGroups() {
