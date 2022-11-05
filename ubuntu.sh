@@ -115,7 +115,6 @@ function checkUsers() {
     fi
 
     checkUID0
-    checknologin
 }
 
 function inputUsers() {
@@ -223,6 +222,8 @@ function secureSudo() {
             else
             echo "sudo is already password protected"
         fi
+
+        checknologin
 
         if promptYN "set root password?"; then
             sudo passwd root
@@ -477,8 +478,15 @@ function checkUID0() {
 function checknologin() {
 
     for username in `cat configs/passwds.txt | cut -f1 -d:`; do
-        cat /etc/passwd | grep $username | grep nologin
+        if cat /etc/passwd | grep $username | grep -q nologin; then
+            echo "WARNING $username has a insecure shell, change it in /etc/passwd"
+        fi
     done
+
+    if cat /etc/passwd | grep root | grep -q nologin; then
+        echo "WARNING root has a insecure shell, change it in /etc/passwd"
+    fi
+
 }
 
 function checkGroups() {
