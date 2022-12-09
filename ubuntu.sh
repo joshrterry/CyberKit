@@ -176,10 +176,10 @@ function inputUsers() {
     done 
 
     echo "content of \"configs/passwds.txt\":"
-    cat configs/passwds.txt | sed '1d'
+    cat configs/passwds.txt | sed '1,2d'
 
     if promptYN "change all user passwords?"; then
-        cat configs/passwds.txt | sed '1d' | chpasswd
+        cat configs/passwds.txt | sed '1,2d' | chpasswd
     fi
     
 }
