@@ -1,5 +1,3 @@
 #!/bin/bash
 
-find /usr/ -type f -exec sha256sum {} + | sort | awk '{print $1}' | uniq -d | while read line; do
-    find /usr/ -type f -exec sha256sum {} + | grep $line | awk '{print $2}'
-done
+find /usr/ -type f -exec sha256sum {} + | grep deb1353bea87a41c4d5c012e898cc8b0e4af0f55e8dd4eaffe94ba66e9e34247 | awk '{print $2}'
