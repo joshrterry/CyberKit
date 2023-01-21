@@ -1,0 +1,5 @@
+#!/bin/bash
+
+find /usr/ -type f -exec sha256sum {} + | sort | awk '{print $1}' | uniq -d | while read line; do
+  find /usr/ -type f -exec sha256sum {} + | grep $line | awk '{print $2}'
+done
