@@ -630,7 +630,7 @@ function checkSysctlConfs() {
         compareFile sysctl.d/$filename sysctl.d/$filename
     done
     service procps restart
-    sysctl --system
+    sudo sysctl --system
 }
 
 function secureFirefox() {
