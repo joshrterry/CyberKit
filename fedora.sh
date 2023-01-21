@@ -277,13 +277,13 @@ function firewalldEnable() {
 
     if dnf list | grep iptables-persistent; then
         if promptYN "iptables-persistent is installed on this device and can conflict with ufw, would you like to remove?"; then
-            sudo dnf purge iptables-persistent
+            sudo dnf remove iptables-persistent
         fi
     fi
 
       if dnf list | grep nftables; then
         if promptYN "nftables is installed on this device and can conflict with ufw, would you like to remove?"; then
-            sudo dnf purge nftables
+            sudo dnf remove nftables
         fi
     fi
 
@@ -321,7 +321,7 @@ function checkSoftwareBeta() {
     for app in $installed; do
         if ! cat configs/manifest.txt | grep -q $app; then
             if promptYN -n "$app not found in manifest. Uninstall?"; then
-                sudo dnf purge $app -yy
+                sudo dnf remove $app -yy
             fi
         fi
     done
@@ -346,7 +346,7 @@ function checkSoftware() {
         clear
         if dnf list | grep -i $i; then
             if promptYN -n "remove $i?"; then
-                sudo dnf purge $i -yy
+                sudo dnf remove $i -yy
             fi
         fi
     done
@@ -360,7 +360,7 @@ function checkSoftware() {
             while promptYN -n "remove a package with this key word?"; do
             read -p "which package would you like to remove: " package
         if promptYN -n "remove $package"; then
-            sudo dnf purge $package -yy
+            sudo dnf remove $package -yy
         fi
         done
     fi
