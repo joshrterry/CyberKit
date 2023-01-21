@@ -629,6 +629,7 @@ function checkSysctlConfs() {
         compareFile sysctl.d/$filename sysctl.d/$filename
     done
     service procps restart
+    sysctl --system
 }
 
 function secureFirefox() {
@@ -712,7 +713,7 @@ function selector() {
         echo ""
         echo "18. file destroyer" # removes chattr attributes on all parent directories
         echo ""
-        echo "19. check software [BETA]"
+        echo "19. check software [ALL]"
 
         read -p "enter section number: " secnum
 }
