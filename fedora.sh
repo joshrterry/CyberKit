@@ -3,7 +3,7 @@
 ############################################ VARIABLES ############################################
 
 PROHIBITEDSOFTWARE=("wireshark*" "nmap" "netcat" "sqlmap" "hydra" "john" "yersinia" "telnet" "telnetd" "medusa" "pompem" "goldeneye" "packit" "themole" "metasploit" "aircrack" "autopsy" "lynis" "fierce" "samba" "apache2" "nginx" "zenmap" "crack" "fakeroot" "logkeys" "aircrack-ng" "libzc6" "ncrack" "avahi-daemon" "cups*" "isc-dhcp-server" "slapd" "nfs-kernel-server" "bind9" "vsftpd" "dovecot-imapd" "dovecot-pop3d" "squid" "snmpd" "autofs" "rsync" "nis" "rsh-client" "talk" "ldap-utils" "rpcbind" "opensmtpd" "dos" "wpscan" "skipfish" "maltego" "nessus" "beef" "apktool" "snort" "xinetd" "doona" "proxychains" "xprobe")
-KEYWORDS=("exploit" "vulnerability" "crack" "capture" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port" "phish" "forensics" "scan" "penetration" "fuzz" "proxy" "fingerprinting")
+KEYWORDS=("exploit" "vulnerability" "crack" "cdnfure" "logger" "inject" "game" "online" "ftp" "gaming" "hack" "sniff" "intercept" "port" "phish" "forensics" "scan" "penetration" "fuzz" "proxy" "fingerprinting")
 SIXFOURFOUR=("/etc/passwd" "/etc/passwd-" "/etc/group" "/etc/group-" "/etc/issue.net" "/etc/issue" "/etc/motd")
 SIXFORTY=("/etc/shadow" "/etc/shadow-" "/etc/gshadow" "/etc/gshadow-" "/etc/sudoers" "/etc/cron.allow")
 SIXHUNDRED=("/etc/crontab" "/etc/ssh/sshd_config" "/etc/anacrontab")
@@ -60,16 +60,16 @@ function upgradeAll() {
 
 # function softwareUpdates() {
 #     clear
-    # fixApt
-    # echo "CHANGE THE FOLLOWING SETTING UNDER UPDATES:"
-    # echo ""
-    # echo "CHECK Important security Updates"
-    # echo "CHECK Recommended updates"
-    # echo "Automatically check for updates: DAILY"
-    # echo "When there are security updates: DOWNLOAD AND INSTALL AUTOMATICALLY"
-    # echo "When there are other updates: DISPLAY IMMEDIATELY"
-    # echo ""
-    # software-properties-gtk
+#     fixdnf
+#     echo "CHANGE THE FOLLOWING SETTING UNDER UPDATES:"
+#     echo ""
+#     echo "CHECK Important security Updates"
+#     echo "CHECK Recommended updates"
+#     echo "Automatically check for updates: DAILY"
+#     echo "When there are security updates: DOWNLOAD AND INSTALL AUTOMATICALLY"
+#     echo "When there are other updates: DISPLAY IMMEDIATELY"
+#     echo ""
+#     software-properties-gtk
 # }
 
 function checkUsers() {
@@ -131,15 +131,17 @@ function inputUsers() {
     echo "enter users portion of readme (be sure to include any new users): "
     nano configs/readme.txt
     cat configs/readme.txt | sed -n '/Authorized Administrators/,/Authorized Users/p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
+    users=$(cat configs/users.txt)
 
-    cat configs/users.txt | while read username; do
+    for username in $users; do
         # read -p "username: " username
         echo "checking for $username"
 
         # if user not found
         if cat /etc/passwd | grep $username &>/dev/null; then
             echo "$username exists in /etc/passwd"
-        elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
+        elif promptYN "$username not found in /etc/passwd. create user $username?"; then
+            echo "Adding user"
             adduser "$username"
         fi
 
@@ -155,21 +157,22 @@ function inputUsers() {
     done
 
     cat configs/readme.txt | sed -n '/Authorized Users/,//p' | awk '{print $1}' | sed '/password:/d' | sed '/Authorized/d' | awk 'NF' > configs/users.txt
+    users=$(cat configs/users.txt)
 
-    cat configs/users.txt | while read username; do
+    for username in $users; do
         # read -p "username: " username
         echo "checking for $username"
 
         # if user not found
-        if cat /etc/passwd | grep $username &>/dev/null; then
-            echo "$username exists in /etc/passwd"
-        elif promptYN -n "$username not found in /etc/passwd. create user $username?"; then
-            adduser "$username"
-        fi
+            if cat /etc/passwd | grep $username &>/dev/null; then
+                echo "$username exists in /etc/passwd"
+            elif promptYN "$username not found in /etc/passwd. create user $username?"; then
+                adduser "$username"
+            fi
 
-        echo "${username}:0ldScona2021!" >> configs/passwds.txt
+            echo "${username}:0ldScona2021!" >> configs/passwds.txt
 
-    done
+    done 
 
     echo "content of \"configs/passwds.txt\":"
     cat configs/passwds.txt | sed '1d'
@@ -203,13 +206,13 @@ function searchHome() {
 
 function secureSudo() {
     clear
-    if promptYN -n "disable local root login?"; then
+    if promptYN "disable local root login?"; then
         clear
         sudo usermod -p '!' root
         echo "root login disabled"
     fi
 
-    if promptYN -n "check for password protection?"; then
+    if promptYN "check for password protection?"; then
         clear
         SUDOGREP=$(grep NOPASSWD /etc/sudoers)
         if echo $SUDOGREP | grep -q NOPASSWD; then
@@ -218,18 +221,21 @@ function secureSudo() {
             else
             echo "sudo is already password protected"
         fi
+
+        checknologin
+
         if promptYN "set root password?"; then
             sudo passwd root
         fi
     fi
 
-    if promptYN -n "check sudoers.d directory?"; then
+    if promptYN "check sudoers.d directory?"; then
         clear
         echo "searching /etc/sudoers.d/"
         ls -l /etc/sudoers.d/
     fi
 
-    if promptYN -n "check sudoers file?"; then
+    if promptYN "check sudoers file?"; then
         clear
         echo "displaying differences in sudoers file:"
         echo ""
@@ -239,7 +245,7 @@ function secureSudo() {
         fi
     fi
 
-    if promptYN -n "check /etc/sudoers.d/README?"; then
+    if promptYN "check /etc/sudoers.d/README?"; then
         clear
         compareFile sudoers.d/README sudoersd.txt
     fi
@@ -269,17 +275,17 @@ function firewalldEnable() {
     # echo "UFW ENABLED"
     # echo ""
 
-    # if dpkg -l | grep iptables-persistent; then
-    #     if promptYN "iptables-persistent is installed on this device and can conflict with ufw, would you like to remove?"; then
-    #         sudo apt purge iptables-persistent
-    #     fi
-    # fi
+    if dnf list | grep iptables-persistent; then
+        if promptYN "iptables-persistent is installed on this device and can conflict with ufw, would you like to remove?"; then
+            sudo dnf purge iptables-persistent
+        fi
+    fi
 
-    #   if dpkg -l | grep nftables; then
-    #     if promptYN "nftables is installed on this device and can conflict with ufw, would you like to remove?"; then
-    #         sudo apt purge nftables
-    #     fi
-    # fi
+      if dnf list | grep nftables; then
+        if promptYN "nftables is installed on this device and can conflict with ufw, would you like to remove?"; then
+            sudo dnf purge nftables
+        fi
+    fi
 
 }
 
@@ -296,12 +302,29 @@ function passwordPolicy() {
 
     if promptYN -n "set user password expiry"; then
         useradd -D -f 30
+        while read admins; do
+            chage -m 1 -M 90 -W 7 --inactive 30 $admins
+            echo "chage set for $admins"
+        done <configs/admins.txt
         while read users; do
             chage -m 1 -M 90 -W 7 --inactive 30 $users
             echo "chage set for $users"
         done <configs/users.txt
     fi
 
+}
+
+function checkSoftwareBeta() {
+    dnf list | awk '{print $2}' > configs/systemmanifest.txt
+    installed=$(cat configs/systemmanifest.txt)
+
+    for app in $installed; do
+        if ! cat configs/manifest.txt | grep -q $app; then
+            if promptYN -n "$app not found in manifest. Uninstall?"; then
+                sudo dnf purge $app -yy
+            fi
+        fi
+    done
 }
 
 function checkSoftware() {
@@ -323,25 +346,25 @@ function checkSoftware() {
         clear
         if dnf list | grep -i $i; then
             if promptYN -n "remove $i?"; then
-                sudo dnf remove $i -yy
+                sudo dnf purge $i -yy
             fi
         fi
     done
 
     clear
 
-    # for i in "${KEYWORDS[@]}"; do
-    #     clear
-    #     echo "searching for packages with '$i' in the description"
-    #     if dpkg -l | grep -i $i; then
-    #         while promptYN -n "remove a package with this key word?"; do
-    #         read -p "which package would you like to remove: " package
-    #     if promptYN -n "remove $package"; then
-    #         sudo dnf remove $package -yy
-    #     fi
-    #     done
-    # fi
-    # done
+    for i in "${KEYWORDS[@]}"; do
+        clear
+        echo "searching for packages with '$i' in the description"
+        if dnf list | grep -i $i; then
+            while promptYN -n "remove a package with this key word?"; do
+            read -p "which package would you like to remove: " package
+        if promptYN -n "remove $package"; then
+            sudo dnf purge $package -yy
+        fi
+        done
+    fi
+    done
 
     sudo dnf autoremove
 
@@ -452,6 +475,20 @@ function checkUID0() {
         fi
     done
     
+}
+
+function checknologin() {
+
+    for username in `cat configs/passwds.txt | cut -f1 -d:`; do
+        if cat /etc/passwd | grep $username | grep -q nologin; then
+            echo "WARNING $username has a insecure shell, change it in /etc/passwd"
+        fi
+    done
+
+    if cat /etc/passwd | grep root | grep -q nologin; then
+        echo "WARNING root has a insecure shell, change it in /etc/passwd"
+    fi
+
 }
 
 function checkGroups() {
@@ -676,6 +713,7 @@ function selector() {
         echo ""
         echo "18. file destroyer" # removes chattr attributes on all parent directories
         echo ""
+        echo "19. check software [ALL]"
 
         read -p "enter section number: " secnum
 }
@@ -700,6 +738,7 @@ case $secnum in
 16) checkSysctlConfs;;
 17) secureFirefox;;
 18) fileDestroyer;;
+19) checkSoftwareBeta;;
 esac
 
 exit
