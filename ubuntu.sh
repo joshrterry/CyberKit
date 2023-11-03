@@ -623,6 +623,7 @@ function enableServices() {
 }
 
 function checkSysctlConfs() {
+    compareFile sysctl.conf sysctl.conf
     for filename in /etc/sysctl.d/*.conf; do
         clear
         filename=${filename##*/}
