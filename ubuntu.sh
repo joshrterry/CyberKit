@@ -602,18 +602,9 @@ function fixApt() {
     sudo add-apt-repository restricted
     sudo add-apt-repository multiverse
     if promptYN "System is Ubuntu (Y); System is Debian (N)"; then
-
-        if diff -q configs/sources.list /etc/apt/sources.list; then
-            compareFile apt/sources.list sources.list
-        else
-            echo "sources.list file is OK"
-        fi
+        compareFile apt/sources.list sources.list
     else
-        if diff -q configs/debian_sources.list /etc/apt/sources.list; then
-            compareFile apt/sources.list debian_sources.list
-        else
-            echo "sources.list file is OK"
-        fi
+        compareFile apt/sources.list debian_sources.list
     fi
 
 }
