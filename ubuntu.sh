@@ -597,11 +597,12 @@ function fixApt() {
     sudo apt update
     echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
     echo 'APT::Periodic::Unattended-Upgrade "1";' >> /etc/apt/apt.conf.d/20auto-upgrades
-    sudo add-apt-repository main
-    sudo add-apt-repository universe
-    sudo add-apt-repository restricted
-    sudo add-apt-repository multiverse
+
     if promptYN "System is Ubuntu (Y); System is Debian (N)"; then
+        sudo add-apt-repository main
+        sudo add-apt-repository universe
+        sudo add-apt-repository restricted
+        sudo add-apt-repository multiverse
         compareFile apt/sources.list sources.list
     else
         compareFile apt/sources.list debian_sources.list
