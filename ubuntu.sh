@@ -723,7 +723,7 @@ function selector() {
         echo "18. file destroyer" # removes chattr attributes on all parent directories
         echo ""
         echo "19. check software [ALL]"
-        echo "20. install Debian CIS
+        echo "20. install Debian CIS"
 
         read -p "enter section number: " secnum
 }
