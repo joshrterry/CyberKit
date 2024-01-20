@@ -597,7 +597,6 @@ function fixApt() {
     sudo apt update
     echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
     echo 'APT::Periodic::Unattended-Upgrade "1";' >> /etc/apt/apt.conf.d/20auto-upgrades
-
     if promptYN "System is Ubuntu (Y); System is Debian (N)"; then
         sudo add-apt-repository main
         sudo add-apt-repository universe
@@ -656,6 +655,15 @@ function fileDestroyer() {
     fi
 }
 
+function installDebianCIS() {
+    git clone https://github.com/ovh/debian-cis.git && cd debian-cis
+    cp debian/default /etc/default/cis-hardening
+    sed -i "s#CIS_LIB_DIR=.*#CIS_LIB_DIR='$(pwd)'/lib#" /etc/default/cis-hardening
+    sed -i "s#CIS_CHECKS_DIR=.*#CIS_CHECKS_DIR='$(pwd)'/bin/hardening#" /etc/default/cis-hardening
+    sed -i "s#CIS_CONF_DIR=.*#CIS_CONF_DIR='$(pwd)'/etc#" /etc/default/cis-hardening
+    sed -i "s#CIS_TMP_DIR=.*#CIS_TMP_DIR='$(pwd)'/tmp#" /etc/default/cis-hardening
+    ./bin/hardening/1.1.1.1_disable_freevxfs.sh --audit
+}
 
 clear
 
@@ -715,6 +723,7 @@ function selector() {
         echo "18. file destroyer" # removes chattr attributes on all parent directories
         echo ""
         echo "19. check software [ALL]"
+        echo "20. install Debian CIS
 
         read -p "enter section number: " secnum
 }
@@ -740,6 +749,7 @@ case $secnum in
 17) secureFirefox;;
 18) fileDestroyer;;
 19) checkSoftwareBeta;;
+20) installDebianCIS;;
 esac
 
 exit
